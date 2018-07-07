@@ -1,12 +1,11 @@
 package org.jenkinsci.plugins.gitclient;
 
 import hudson.plugins.git.Branch;
-import org.apache.commons.lang.SystemUtils;
-
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
+import org.apache.commons.lang.SystemUtils;
 
 /**
  * @author <a href="mailto:nicolas.deloof@gmail.com">Nicolas De Loof</a>

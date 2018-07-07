@@ -1,25 +1,22 @@
 package hudson.plugins.git;
 
-import org.jenkinsci.plugins.gitclient.Git;
-import org.jenkinsci.plugins.gitclient.GitClient;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 
 import hudson.EnvVars;
 import hudson.model.TaskListener;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import static java.nio.file.StandardOpenOption.APPEND;
-
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-
+import org.jenkinsci.plugins.gitclient.Git;
+import org.jenkinsci.plugins.gitclient.GitClient;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import static org.junit.Assert.*;
 import org.junit.rules.TemporaryFolder;
-import static org.hamcrest.CoreMatchers.is;
 
 public class GitExceptionTest {
 

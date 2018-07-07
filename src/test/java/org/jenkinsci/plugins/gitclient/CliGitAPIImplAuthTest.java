@@ -1,5 +1,8 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static org.hamcrest.Matchers.hasItems;
+import static org.junit.Assert.*;
+
 import hudson.EnvVars;
 import hudson.Launcher;
 import hudson.model.TaskListener;
@@ -10,10 +13,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import static org.hamcrest.Matchers.hasItems;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * CliGitAPIImpl authorization specific tests.

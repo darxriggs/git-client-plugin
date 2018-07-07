@@ -1,5 +1,8 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+
 import hudson.EnvVars;
 import hudson.model.TaskListener;
 import java.io.File;
@@ -7,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

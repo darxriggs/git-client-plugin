@@ -1,9 +1,10 @@
 package hudson.plugins.git;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class IndexEntryTest {
 

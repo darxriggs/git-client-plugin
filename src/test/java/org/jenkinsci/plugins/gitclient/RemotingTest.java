@@ -8,15 +8,15 @@ import hudson.model.StreamBuildListener;
 import hudson.remoting.Callable;
 import hudson.remoting.VirtualChannel;
 import hudson.slaves.DumbSlave;
+import java.io.File;
+import java.io.IOException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
+import org.jenkinsci.remoting.RoleChecker;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.jvnet.hudson.test.JenkinsRule;
-import java.io.File;
-import java.io.IOException;
-import org.jenkinsci.remoting.RoleChecker;
 
 /**
  * @author Kohsuke Kawaguchi

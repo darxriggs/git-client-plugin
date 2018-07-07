@@ -1,9 +1,10 @@
 package hudson.plugins.git;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import static org.hamcrest.CoreMatchers.is;
 
 public class GitLockFailedExceptionTest {
 

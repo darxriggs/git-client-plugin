@@ -1,5 +1,8 @@
 package hudson.plugins.git;
 
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+
 import hudson.EnvVars;
 import hudson.model.Node;
 import hudson.model.TaskListener;
@@ -11,8 +14,6 @@ import java.util.List;
 import org.apache.commons.lang.SystemUtils;
 import org.jenkinsci.plugins.gitclient.JGitApacheTool;
 import org.jenkinsci.plugins.gitclient.JGitTool;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;

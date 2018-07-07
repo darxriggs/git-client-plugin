@@ -1,10 +1,11 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static org.junit.Assert.*;
+
 import hudson.EnvVars;
 import hudson.model.TaskListener;
 import hudson.plugins.git.GitException;
 import hudson.util.StreamTaskListener;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,12 +17,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import org.eclipse.jgit.lib.ObjectId;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;

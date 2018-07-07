@@ -1,5 +1,14 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+
+import com.google.common.io.Files;
+import hudson.model.TaskListener;
+import hudson.plugins.git.Branch;
+import hudson.plugins.git.GitException;
+import hudson.util.StreamTaskListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -8,23 +17,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import static java.util.stream.Collectors.toList;
-
-import hudson.model.TaskListener;
-import hudson.plugins.git.Branch;
-import hudson.plugins.git.GitException;
-import hudson.util.StreamTaskListener;
-
 import org.apache.commons.io.FileUtils;
-
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.URIish;
-
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;

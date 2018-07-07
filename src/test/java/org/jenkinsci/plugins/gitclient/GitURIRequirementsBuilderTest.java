@@ -1,16 +1,15 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.cloudbees.plugins.credentials.domains.HostnamePortRequirement;
 import com.cloudbees.plugins.credentials.domains.HostnameRequirement;
 import com.cloudbees.plugins.credentials.domains.PathRequirement;
 import com.cloudbees.plugins.credentials.domains.SchemeRequirement;
-import org.junit.Test;
-
 import java.util.List;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 
 /**
  * @author stephenc

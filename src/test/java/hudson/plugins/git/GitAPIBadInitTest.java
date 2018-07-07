@@ -1,21 +1,19 @@
 package hudson.plugins.git;
 
+import static org.junit.Assert.*;
+
 import hudson.EnvVars;
 import hudson.model.TaskListener;
 import hudson.util.StreamTaskListener;
-import org.jenkinsci.plugins.gitclient.GitClient;
-
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.commons.io.FileUtils;
-
+import org.jenkinsci.plugins.gitclient.GitClient;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
-import static org.junit.Assert.*;
 
 public class GitAPIBadInitTest {
 

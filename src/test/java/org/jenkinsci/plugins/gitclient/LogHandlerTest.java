@@ -1,9 +1,10 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static org.junit.Assert.*;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 

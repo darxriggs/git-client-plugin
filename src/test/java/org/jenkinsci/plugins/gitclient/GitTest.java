@@ -1,12 +1,13 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static org.junit.Assert.assertTrue;
+
 import hudson.FilePath;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import org.eclipse.jgit.lib.ObjectId;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

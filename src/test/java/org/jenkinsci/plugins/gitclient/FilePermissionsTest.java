@@ -1,5 +1,7 @@
 package org.jenkinsci.plugins.gitclient;
 
+import static org.junit.Assert.*;
+
 import hudson.model.TaskListener;
 import hudson.plugins.git.GitException;
 import hudson.util.StreamTaskListener;
@@ -21,7 +23,6 @@ import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
