@@ -55,7 +55,6 @@ import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 
 /**
- *
  * @author Mark Waite
  */
 @RunWith(Parameterized.class)
@@ -105,8 +104,7 @@ public class CredentialsTest {
     private static long firstTestStartTime = 0;
 
     /* Windows refuses directory names with '*', '<', '>', '|', '?', and ':' */
-    private final String SPECIALS_TO_CHECK = "%()`$&{}[]"
-            + (isWindows() ? "" : "*<>:|?");
+    private final String SPECIALS_TO_CHECK = "%()`$&{}[]" + (isWindows() ? "" : "*<>:|?");
     private static int specialsIndex = 0;
 
     public CredentialsTest(String gitImpl, String gitRepoUrl, String username, String password, File privateKey, String passphrase, String fileToCheck, Boolean submodules, Boolean useParentCreds) {

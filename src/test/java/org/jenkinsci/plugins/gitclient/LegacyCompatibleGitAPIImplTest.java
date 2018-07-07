@@ -88,15 +88,13 @@ public class LegacyCompatibleGitAPIImplTest {
 
     private String cmd(boolean ignoreError, String... args) throws IOException, InterruptedException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int st = new Launcher.LocalLauncher(listener).launch().pwd(repo).cmds(args).
-                envs(env).stdout(out).join();
+        int st = new Launcher.LocalLauncher(listener).launch().pwd(repo).cmds(args).envs(env).stdout(out).join();
         String s = out.toString();
         if (!ignoreError) {
             if (s == null || s.isEmpty()) {
                 s = StringUtils.join(args, ' ');
             }
             assertEquals(s, 0, st); /* Reports full output of failing commands */
-
         }
         return s;
     }

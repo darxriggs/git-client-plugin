@@ -35,7 +35,6 @@ public class LogHandlerTest {
         String message = "testing flush";
         publishMessage(message);
         handler.flush(); /* no-op */
-
     }
 
     @Test
@@ -89,5 +88,4 @@ public class LogHandlerTest {
         assertEquals("Wrong timeout 1", timeout1, timeouts.get(1).intValue());
         assertEquals("Wrong size list", 2, timeouts.size());
     }
-
 }

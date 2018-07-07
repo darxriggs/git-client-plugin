@@ -88,7 +88,6 @@ public class CliGitAPITempFileTest {
     /**
      * Check that the file path returned by CliGitAPIImpl.createTempFile
      * contains no characters that are invalid for CLI git authentication.
-     *
      */
     @Test
     @Issue({"JENKINS-44301", "JENKINS-43931"}) // and ...

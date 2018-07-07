@@ -14,10 +14,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 @RunWith(Parameterized.class)
 public class GitObjectTest {
 
-    private final String sha1String;
     private final String name;
+    private final String sha1String;
     private final ObjectId sha1;
-
     private final GitObject gitObject;
 
     public GitObjectTest(String name, String sha1String) {

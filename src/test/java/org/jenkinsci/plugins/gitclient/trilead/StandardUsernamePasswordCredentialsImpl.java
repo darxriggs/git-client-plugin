@@ -38,5 +38,4 @@ class StandardUsernamePasswordCredentialsImpl implements StandardUsernamePasswor
     public Secret getPassword() {
         return password;
     }
-
 }

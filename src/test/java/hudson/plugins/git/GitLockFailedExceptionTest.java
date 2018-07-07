@@ -44,5 +44,4 @@ public class GitLockFailedExceptionTest {
         thrown.expectMessage(is(lockMessage));
         throw new GitLockFailedException(lockMessage, e);
     }
-
 }

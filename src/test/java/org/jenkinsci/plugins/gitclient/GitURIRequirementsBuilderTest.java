@@ -14,14 +14,12 @@ import static org.junit.Assert.assertThat;
 
 /**
  * @author stephenc
- * @since 30/08/2013 15:05
  */
 public class GitURIRequirementsBuilderTest {
 
     @Test
     public void smokes() throws Exception {
-        List<DomainRequirement> list =
-                GitURIRequirementsBuilder.fromUri("ssh://bob@foo.bar.com:8080/path/to/repo.git/").build();
+        List<DomainRequirement> list = GitURIRequirementsBuilder.fromUri("ssh://bob@foo.bar.com:8080/path/to/repo.git/").build();
 
         SchemeRequirement scheme = firstOrNull(list, SchemeRequirement.class);
         HostnameRequirement hostname = firstOrNull(list, HostnameRequirement.class);
@@ -547,15 +545,13 @@ public class GitURIRequirementsBuilderTest {
         assertThat(hostnamePort, nullValue());
         assertThat(path, notNullValue());
         assertThat(path.getPath(), is("/path/to/repo.git/"));
-
     }
 
     private static <T> T firstOrNull(List<? super T> list, Class<T> type) {
-        for (Object i: list) {
+        for (Object i : list) {
             if (type.isInstance(i))
                 return type.cast(i);
         }
         return null;
     }
-
 }

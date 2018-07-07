@@ -101,7 +101,6 @@ public class NetrcTest {
         copyResourceContents(TEST_NETRC_FILE_2 + ".in", testFilePath_2);
     }
 
-
     @Test
     public void testGetInstanceString() {
         Netrc netrc = Netrc.getInstance(testFilePath_1);
@@ -113,7 +112,6 @@ public class NetrcTest {
         Netrc netrc = Netrc.getInstance(new File(testFilePath_1));
         assertNotNull(netrc);
     }
-
 
     @Test
     public void testGetCredentialsPath() {
@@ -139,7 +137,6 @@ public class NetrcTest {
         assertNull("Credentials for H2_04 should be null.", netrc.getCredentials(TestHost.H2_04.machine));
     }
 
-
     @Test
     public void testGetCredentialsFile() {
         Netrc netrc = Netrc.getInstance(new File(testFilePath_1));
@@ -164,7 +161,6 @@ public class NetrcTest {
         assertNull("Credentials for H2_04 should be null.", netrc.getCredentials(TestHost.H2_04.machine));
     }
 
-
     @Test
     public void testGetCredentialsModifyFile() throws IOException {
         String testFilePath = testFilePath_1 + "_m";
@@ -187,12 +183,10 @@ public class NetrcTest {
         assertCredentials(TestHost.H1_11, netrc.getCredentials(TestHost.H1_11.machine));
         assertCredentials(TestHost.H1_12, netrc.getCredentials(TestHost.H1_12.machine));
 
-
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) { /* ignored */ }
         copyFileContents(testFilePath_1a, testFilePath);
-
 
         assertCredentials(TestHost.H1_01, netrc.getCredentials(TestHost.H1_01.machine));
         assertCredentials(TestHost.H1_02, netrc.getCredentials(TestHost.H1_02.machine));
@@ -210,9 +204,7 @@ public class NetrcTest {
         assertNull("Credentials for H1_11 should be null.", netrc.getCredentials(TestHost.H1_11.machine));
 
         assertCredentials(TestHost.H1_12, netrc.getCredentials(TestHost.H1_12.machine));
-
     }
-
 
     @Test
     public void testGetCredentialsOtherFile() {
@@ -248,5 +240,4 @@ public class NetrcTest {
         assertNull("Credentials for H1_03 should be null.", netrc.getCredentials(TestHost.H1_03.machine));
         assertNull("Credentials for H1_04 should be null.", netrc.getCredentials(TestHost.H1_04.machine));
     }
-
 }

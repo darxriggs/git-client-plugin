@@ -72,5 +72,4 @@ public class GitToolTest {
         List<ToolDescriptor<? extends GitTool>> toolDescriptors = gitDescriptor.getApplicableDescriptors();
         assertThat(toolDescriptors, containsInAnyOrder(gitDescriptor, jgitDescriptor, jgitApacheDescriptor));
     }
-
 }

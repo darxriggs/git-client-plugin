@@ -9,6 +9,7 @@ import org.eclipse.jgit.transport.BasePackFetchConnection;
  * @author <a href="mailto:nicolas.deloof@gmail.com">Nicolas De Loof</a>
  */
 public class JGitApacheAPIImplTest extends GitAPITestCase {
+
     @Override
     protected GitClient setupGitAPI(File ws) throws Exception {
         return Git.with(listener, env).in(ws).using("jgitapache").getClient();
@@ -41,7 +42,7 @@ public class JGitApacheAPIImplTest extends GitAPITestCase {
     protected void runTest() throws Throwable {
         Method m = getClass().getMethod(getName());
 
-        if (m.getAnnotation(NotImplementedInJGit.class)!=null)
+        if (m.getAnnotation(NotImplementedInJGit.class) != null)
             return; // skip this test case
 
         try {
