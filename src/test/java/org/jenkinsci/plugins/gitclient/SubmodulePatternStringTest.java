@@ -22,8 +22,7 @@ public class SubmodulePatternStringTest {
 
     private static final Pattern SUBMODULE_CONFIG_PATTERN = Pattern.compile(CliGitAPIImpl.SUBMODULE_REMOTE_PATTERN_STRING, Pattern.MULTILINE);
 
-    public SubmodulePatternStringTest(String repoUrl, String remoteName)
-    {
+    public SubmodulePatternStringTest(String repoUrl, String remoteName) {
         this.remoteName = remoteName;
         this.submoduleConfigOutput = "submodule." + remoteName + ".url " + repoUrl;
         this.matcher = SUBMODULE_CONFIG_PATTERN.matcher(submoduleConfigOutput);

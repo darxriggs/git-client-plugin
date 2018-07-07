@@ -176,40 +176,37 @@ public abstract class GitAPITestCase extends TestCase {
         }
 
         private void setupProxy(GitClient gitClient)
-              throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException
-        {
-          final String proxyHost = getSystemProperty("proxyHost", "http.proxyHost", "https.proxyHost");
-          final String proxyPort = getSystemProperty("proxyPort", "http.proxyPort", "https.proxyPort");
-          final String proxyUser = getSystemProperty("proxyUser", "http.proxyUser", "https.proxyUser");
-          //final String proxyPassword = getSystemProperty("proxyPassword", "http.proxyPassword", "https.proxyPassword");
-          final String noProxyHosts = getSystemProperty("noProxyHosts", "http.noProxyHosts", "https.noProxyHosts");
-          if(isBlank(proxyHost) || isBlank(proxyPort)) return;
-          ProxyConfiguration proxyConfig = new ObjenesisStd().newInstance(ProxyConfiguration.class);
-          setField(ProxyConfiguration.class, "name", proxyConfig, proxyHost);
-          setField(ProxyConfiguration.class, "port", proxyConfig, Integer.parseInt(proxyPort));
-          setField(ProxyConfiguration.class, "userName", proxyConfig, proxyUser);
-          setField(ProxyConfiguration.class, "noProxyHost", proxyConfig, noProxyHosts);
-          //Password does not work since a set password results in a "Secret" call which expects a running Jenkins
-          setField(ProxyConfiguration.class, "password", proxyConfig, null);
-          setField(ProxyConfiguration.class, "secretPassword", proxyConfig, null);
-          gitClient.setProxy(proxyConfig);
+                throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+            final String proxyHost = getSystemProperty("proxyHost", "http.proxyHost", "https.proxyHost");
+            final String proxyPort = getSystemProperty("proxyPort", "http.proxyPort", "https.proxyPort");
+            final String proxyUser = getSystemProperty("proxyUser", "http.proxyUser", "https.proxyUser");
+            //final String proxyPassword = getSystemProperty("proxyPassword", "http.proxyPassword", "https.proxyPassword");
+            final String noProxyHosts = getSystemProperty("noProxyHosts", "http.noProxyHosts", "https.noProxyHosts");
+            if (isBlank(proxyHost) || isBlank(proxyPort)) return;
+            ProxyConfiguration proxyConfig = new ObjenesisStd().newInstance(ProxyConfiguration.class);
+            setField(ProxyConfiguration.class, "name", proxyConfig, proxyHost);
+            setField(ProxyConfiguration.class, "port", proxyConfig, Integer.parseInt(proxyPort));
+            setField(ProxyConfiguration.class, "userName", proxyConfig, proxyUser);
+            setField(ProxyConfiguration.class, "noProxyHost", proxyConfig, noProxyHosts);
+            //Password does not work since a set password results in a "Secret" call which expects a running Jenkins
+            setField(ProxyConfiguration.class, "password", proxyConfig, null);
+            setField(ProxyConfiguration.class, "secretPassword", proxyConfig, null);
+            gitClient.setProxy(proxyConfig);
         }
 
         private void setField(Class<?> clazz, String fieldName, Object object, Object value)
-              throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException
-        {
-          Field declaredField = clazz.getDeclaredField(fieldName);
-          declaredField.setAccessible(true);
-          declaredField.set(object, value);
+                throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+            Field declaredField = clazz.getDeclaredField(fieldName);
+            declaredField.setAccessible(true);
+            declaredField.set(object, value);
         }
 
-        private String getSystemProperty(String ... keyVariants)
-        {
-          for(String key : keyVariants) {
-            String value = System.getProperty(key);
-            if(value != null) return value;
-          }
-          return null;
+        private String getSystemProperty(String... keyVariants) {
+            for (String key : keyVariants) {
+                String value = System.getProperty(key);
+                if (value != null) return value;
+            }
+            return null;
         }
 
         String cmd(String args) throws IOException, InterruptedException {
@@ -391,8 +388,7 @@ public abstract class GitAPITestCase extends TestCase {
     /* HEAD ref of local mirror - all read access should use getMirrorHead */
     private static ObjectId mirrorHead = null;
 
-    private ObjectId getMirrorHead() throws IOException, InterruptedException
-    {
+    private ObjectId getMirrorHead() throws IOException, InterruptedException {
         if (mirrorHead == null) {
             final String mirrorPath = new File(localMirror()).getAbsolutePath();
             mirrorHead = ObjectId.fromString(w.launchCommand("git", "--git-dir=" + mirrorPath, "rev-parse", "HEAD").substring(0,40));
@@ -556,8 +552,7 @@ public abstract class GitAPITestCase extends TestCase {
      * otherwise no branch is checked out. That is different than the
      * command line git program, but consistent within the git API.
      */
-    public void test_clone() throws Exception
-    {
+    public void test_clone() throws Exception {
         cloneTimeout = 1 + random.nextInt(60 * 24);
         w.git.clone_().timeout(cloneTimeout).url(localMirror()).repositoryName("origin").execute();
         createRevParseBranch(); // Verify JENKINS-32258 is fixed
@@ -582,8 +577,7 @@ public abstract class GitAPITestCase extends TestCase {
         }
     }
 
-    public void test_clone_repositoryName() throws IOException, InterruptedException
-    {
+    public void test_clone_repositoryName() throws IOException, InterruptedException {
         w.git.clone_().url(localMirror()).repositoryName("upstream").execute();
         w.git.checkout("upstream/master", "master");
         check_remote_url("upstream");
@@ -592,8 +586,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertFalse("Alternates file found: " + alternates, w.exists(alternates));
     }
 
-    public void test_clone_shallow() throws Exception
-    {
+    public void test_clone_shallow() throws Exception {
         w.git.clone_().url(localMirror()).repositoryName("origin").shallow(true).execute();
         createRevParseBranch(); // Verify JENKINS-32258 is fixed
         w.git.checkout("origin/master", "master");
@@ -607,8 +600,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertEquals("shallow file existence: " + shallow, hasShallowCloneSupport, w.exists(shallow));
     }
 
-    public void test_clone_shallow_with_depth() throws Exception
-    {
+    public void test_clone_shallow_with_depth() throws Exception {
         w.git.clone_().url(localMirror()).repositoryName("origin").shallow(true).depth(2).execute();
         w.git.checkout("origin/master", "master");
         check_remote_url("origin");
@@ -621,8 +613,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertEquals("shallow file existence: " + shallow, hasShallowCloneSupport, w.exists(shallow));
     }
 
-    public void test_clone_shared() throws IOException, InterruptedException
-    {
+    public void test_clone_shared() throws IOException, InterruptedException {
         w.git.clone_().url(localMirror()).repositoryName("origin").shared().execute();
         createRevParseBranch(); // Verify JENKINS-32258 is fixed
         w.git.checkout("origin/master", "master");
@@ -632,8 +623,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertNoObjectsInRepository();
     }
 
-    public void test_clone_null_branch() throws IOException, InterruptedException
-    {
+    public void test_clone_null_branch() throws IOException, InterruptedException {
         w.git.clone_().url(localMirror()).repositoryName("origin").shared().execute();
         createRevParseBranch();
         w.git.checkout("origin/master", null);
@@ -642,8 +632,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertNoObjectsInRepository();
     }
 
-    public void test_clone_unshared() throws IOException, InterruptedException
-    {
+    public void test_clone_unshared() throws IOException, InterruptedException {
         w.git.clone_().url(localMirror()).repositoryName("origin").shared(false).execute();
         createRevParseBranch(); // Verify JENKINS-32258 is fixed
         w.git.checkout("origin/master", "master");
@@ -652,8 +641,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertAlternatesFileNotFound();
     }
 
-    public void test_clone_reference() throws IOException, InterruptedException
-    {
+    public void test_clone_reference() throws IOException, InterruptedException {
         w.git.clone_().url(localMirror()).repositoryName("origin").reference(localMirror()).execute();
         createRevParseBranch(); // Verify JENKINS-32258 is fixed
         w.git.checkout("origin/master", "master");
@@ -695,8 +683,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertTrue("Alternates destination " + actualContent + " missing", alternatesDir.isDirectory());
     }
 
-    public void test_clone_reference_working_repo() throws IOException, InterruptedException
-    {
+    public void test_clone_reference_working_repo() throws IOException, InterruptedException {
         assertTrue("SRC_DIR " + SRC_DIR + " has no .git subdir", (new File(SRC_DIR + File.separator + ".git").isDirectory()));
         final File shallowFile = new File(SRC_DIR + File.separator + ".git" + File.separator + "shallow");
         if (shallowFile.exists()) {
@@ -1831,14 +1818,12 @@ public abstract class GitAPITestCase extends TestCase {
         }
     }
 
-    public void test_hasGitRepo_without_git_directory() throws Exception
-    {
+    public void test_hasGitRepo_without_git_directory() throws Exception {
         setTimeoutVisibleInCurrentTest(false);
         assertFalse("Empty directory has a Git repo", w.git.hasGitRepo());
     }
 
-    public void test_hasGitRepo_with_invalid_git_repo() throws Exception
-    {
+    public void test_hasGitRepo_with_invalid_git_repo() throws Exception {
         // Create an empty directory named .git - "corrupt" git repo
         assertTrue("mkdir .git failed", w.file(".git").mkdir());
         assertFalse("Invalid Git repo reported as valid", w.git.hasGitRepo());
@@ -1971,8 +1956,7 @@ public abstract class GitAPITestCase extends TestCase {
      * A rev-parse warning message should not break revision parsing.
      */
     @Issue("JENKINS-11177")
-    public void test_jenkins_11177() throws Exception
-    {
+    public void test_jenkins_11177() throws Exception {
         w.init();
         w.commitEmpty("init");
         ObjectId base = w.head();
@@ -3415,8 +3399,7 @@ public abstract class GitAPITestCase extends TestCase {
      * output to the destination.  Does not check that the abort() API
      * releases resources.
      */
-    public void test_changelog_abort() throws InterruptedException, IOException
-    {
+    public void test_changelog_abort() throws InterruptedException, IOException {
         final String logMessage = "changelog-abort-test-commit";
         w.init();
         w.touch("file-changelog-abort", "changelog abort file contents " + java.util.UUID.randomUUID().toString());
@@ -3683,8 +3666,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertThat(references.size(), is(1));
     }
 
-    private Properties parseLsRemote(File file) throws IOException
-    {
+    private Properties parseLsRemote(File file) throws IOException {
         Properties properties = new Properties();
         Pattern pattern = Pattern.compile("([a-f0-9]{40})\\s*(.*)");
         for(Object lineO : FileUtils.readLines(file)) {
@@ -3699,8 +3681,7 @@ public abstract class GitAPITestCase extends TestCase {
         return properties;
     }
 
-    private void extract(ZipFile zipFile, File outputDir) throws IOException
-    {
+    private void extract(ZipFile zipFile, File outputDir) throws IOException {
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
         while (entries.hasMoreElements()) {
             ZipEntry entry = entries.nextElement();
@@ -3717,8 +3698,7 @@ public abstract class GitAPITestCase extends TestCase {
         }
     }
 
-    private void check_getHeadRev(String remote, String branchSpec, ObjectId expectedObjectId) throws Exception
-    {
+    private void check_getHeadRev(String remote, String branchSpec, ObjectId expectedObjectId) throws Exception {
         ObjectId actualObjectId = w.git.getHeadRev(remote, branchSpec);
         assertNotNull(String.format("Expected ObjectId is null expectedObjectId '%s', remote '%s', branchSpec '%s'.",
                     expectedObjectId, remote, branchSpec), expectedObjectId);
@@ -3731,8 +3711,7 @@ public abstract class GitAPITestCase extends TestCase {
                 expectedObjectId, actualObjectId);
     }
 
-    private List<Branch> getBranches(ObjectId objectId) throws GitException, InterruptedException
-    {
+    private List<Branch> getBranches(ObjectId objectId) throws GitException, InterruptedException {
         List<Branch> matches = new ArrayList<>();
         Set<Branch> branches = w.git.getBranches();
         for(Branch branch : branches) {
@@ -3825,8 +3804,7 @@ public abstract class GitAPITestCase extends TestCase {
         check_headRev(w.repoPath(), getMirrorHead());
     }
 
-    private void check_changelog_sha1(final String sha1, final String branchName) throws InterruptedException
-    {
+    private void check_changelog_sha1(final String sha1, final String branchName) throws InterruptedException {
         ChangelogCommand changelogCommand = w.git.changelog();
         changelogCommand.max(1);
         StringWriter writer = new StringWriter();
@@ -3896,8 +3874,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertTrue(diffs.isEmpty());
     }
 
-    private void check_bounded_changelog_sha1(final String sha1Begin, final String sha1End, final String branchName) throws InterruptedException
-    {
+    private void check_bounded_changelog_sha1(final String sha1Begin, final String sha1End, final String branchName) throws InterruptedException {
         StringWriter writer = new StringWriter();
         w.git.changelog(sha1Begin, sha1End, writer);
         String splitLog[] = writer.toString().split("[\\n\\r]", 3); // Extract first line of changelog

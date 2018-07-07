@@ -17,8 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-public class NetrcTest
-{
+public class NetrcTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -59,37 +58,31 @@ public class NetrcTest
         private String login;
         private String password;
 
-        private TestHost(String _machine, String _login, String _password)
-        {
+        private TestHost(String _machine, String _login, String _password) {
             this.machine = _machine;
             this.login = _login;
             this.password = _password;
         }
     }
 
-
-    private void assertCredentials(TestHost host, Credentials cred)
-    {
+    private void assertCredentials(TestHost host, Credentials cred) {
         if (cred == null) {
             assertTrue("Host." + host.name() + ": Credentials are null, although both login and password are set. (" + host.login + ":" + host.password + ")",
                     host.login == null || host.password == null);
-        }
-        else {
+        } else {
             assertEquals("Host." + host.name() + ": Login mismatch.", host.login, ((UsernamePasswordCredentials)cred).getUserName());
             assertEquals("Host." + host.name() + ": Password mismatch.", host.password, ((UsernamePasswordCredentials)cred).getPassword());
         }
     }
 
-    private void copyFileContents(String source, String destination) throws IOException
-    {
+    private void copyFileContents(String source, String destination) throws IOException {
         try (InputStream sourceStream = Files.newInputStream(Paths.get(source));
                 OutputStream out = Files.newOutputStream(Paths.get(destination))) {
             IOUtils.copy(sourceStream, out);
         }
     }
 
-    private void copyResourceContents(String resource, String destination) throws IOException
-    {
+    private void copyResourceContents(String resource, String destination) throws IOException {
         try (InputStream sourceStream = this.getClass().getClassLoader().getResourceAsStream(resource);
                 OutputStream out = Files.newOutputStream(Paths.get(destination))) {
             IOUtils.copy(sourceStream, out);
@@ -97,8 +90,7 @@ public class NetrcTest
     }
 
     @Before
-    public void setup() throws IOException
-    {
+    public void setup() throws IOException {
         testFilePath_1 = folder.newFile(TEST_NETRC_FILE_1).getAbsolutePath();
         copyResourceContents(TEST_NETRC_FILE_1 + ".in", testFilePath_1);
 
@@ -111,23 +103,20 @@ public class NetrcTest
 
 
     @Test
-    public void testGetInstanceString()
-    {
+    public void testGetInstanceString() {
         Netrc netrc = Netrc.getInstance(testFilePath_1);
         assertNotNull(netrc);
     }
 
     @Test
-    public void testGetInstanceFile()
-    {
+    public void testGetInstanceFile() {
         Netrc netrc = Netrc.getInstance(new File(testFilePath_1));
         assertNotNull(netrc);
     }
 
 
     @Test
-    public void testGetCredentialsPath()
-    {
+    public void testGetCredentialsPath() {
         Netrc netrc = Netrc.getInstance(testFilePath_1);
         assertNotNull(netrc);
 
@@ -152,8 +141,7 @@ public class NetrcTest
 
 
     @Test
-    public void testGetCredentialsFile()
-    {
+    public void testGetCredentialsFile() {
         Netrc netrc = Netrc.getInstance(new File(testFilePath_1));
         assertNotNull(netrc);
 
@@ -178,8 +166,7 @@ public class NetrcTest
 
 
     @Test
-    public void testGetCredentialsModifyFile() throws IOException
-    {
+    public void testGetCredentialsModifyFile() throws IOException {
         String testFilePath = testFilePath_1 + "_m";
 
         copyFileContents(testFilePath_1, testFilePath);
@@ -228,8 +215,7 @@ public class NetrcTest
 
 
     @Test
-    public void testGetCredentialsOtherFile()
-    {
+    public void testGetCredentialsOtherFile() {
         Netrc netrc = Netrc.getInstance(testFilePath_1);
         assertNotNull(netrc);
 

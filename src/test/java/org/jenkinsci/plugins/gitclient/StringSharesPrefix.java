@@ -17,7 +17,7 @@ class StringSharesPrefix extends SubstringMatcher {
 
     @Override
     protected String relationship() {
-            return "sharing prefix with";
+        return "sharing prefix with";
     }
 
     /**
