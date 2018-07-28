@@ -2024,10 +2024,6 @@ public abstract class GitAPITestCase extends TestCase {
      * JGit clean as implemented in JGitAPIImpl removes untracked submodules.
      * This test captures that surprising difference between the implementations.
      *
-     * Command line git as implemented in CliGitAPIImpl supports renamed submodules.
-     * JGit as implemented in JGitAPIImpl does not support renamed submodules.
-     * This test captures that surprising difference between the implementations.
-     *
      * This test really should be split into multiple tests.
      * Current transitions in the test include:
      *   with submodules -> without submodules, with files/dirs of same name
@@ -2079,33 +2075,19 @@ public abstract class GitAPITestCase extends TestCase {
 
         /* Call submodule update without recursion */
         w.git.submoduleUpdate().recursive(false).execute();
-        /* Command line git supports renamed submodule dirs, JGit does not */
-        /* JGit silently fails submodule updates on renamed submodule dirs */
-        if (w.git instanceof CliGitAPIImpl) {
-            assertSubmoduleDirs(w.repo, true, true);
-            assertSubmoduleContents(w.repo);
-            assertSubmoduleRepository(new File(w.repo, "modules/ntp"));
-            assertSubmoduleRepository(new File(w.repo, "modules/firewall"));
-            assertSubmoduleRepository(new File(w.repo, "modules/sshkeys"));
-        } else {
-            /* JGit does not fully support renamed submodules - creates directories but not content */
-            assertSubmoduleDirs(w.repo, true, false);
-        }
+        assertSubmoduleDirs(w.repo, true, true);
+        assertSubmoduleContents(w.repo);
+        assertSubmoduleRepository(new File(w.repo, "modules/ntp"));
+        assertSubmoduleRepository(new File(w.repo, "modules/firewall"));
+        assertSubmoduleRepository(new File(w.repo, "modules/sshkeys"));
 
         /* Call submodule update with recursion */
         w.git.submoduleUpdate().recursive(true).execute();
-        /* Command line git supports renamed submodule dirs, JGit does not */
-        /* JGit silently fails submodule updates on renamed submodule dirs */
-        if (w.git instanceof CliGitAPIImpl) {
-            assertSubmoduleDirs(w.repo, true, true);
-            assertSubmoduleContents(w.repo);
-            assertSubmoduleRepository(new File(w.repo, "modules/ntp"));
-            assertSubmoduleRepository(new File(w.repo, "modules/firewall"));
-            assertSubmoduleRepository(new File(w.repo, "modules/sshkeys"));
-        } else {
-            /* JGit does not fully support renamed submodules - creates directories but not content */
-            assertSubmoduleDirs(w.repo, true, false);
-        }
+        assertSubmoduleDirs(w.repo, true, true);
+        assertSubmoduleContents(w.repo);
+        assertSubmoduleRepository(new File(w.repo, "modules/ntp"));
+        assertSubmoduleRepository(new File(w.repo, "modules/firewall"));
+        assertSubmoduleRepository(new File(w.repo, "modules/sshkeys"));
 
         String notSubBranchName = "tests/notSubmodules";
         String notSubRefName = "origin/" + notSubBranchName;
@@ -2255,11 +2237,6 @@ public abstract class GitAPITestCase extends TestCase {
         }
     }
 
-    /* Submodule checkout in JGit does not support renamed submodules.
-     * The test branch intentionally includes a renamed submodule, so this test
-     * is not run with JGit.
-     */
-    @NotImplementedInJGit
     public void test_submodule_checkout_simple() throws Exception {
         w = clone(localMirror());
         assertSubmoduleDirs(w.repo, false, false);
@@ -2610,7 +2587,6 @@ public abstract class GitAPITestCase extends TestCase {
         }
     }
 
-    /* Shows the JGit submodule update is broken now that tests/getSubmodule includes a renamed submodule */
     public void test_getSubmodules() throws Exception {
         w.init();
         w.git.clone_().url(localMirror()).repositoryName("sub_origin").execute();
@@ -2627,15 +2603,10 @@ public abstract class GitAPITestCase extends TestCase {
 
         assertTrue("modules/firewall does not exist", w.exists("modules/firewall"));
         assertTrue("modules/ntp does not exist", w.exists("modules/ntp"));
-        // JGit submodule implementation doesn't handle renamed submodules
-        if (w.igit() instanceof CliGitAPIImpl) {
-            assertTrue("modules/sshkeys does not exist", w.exists("modules/sshkeys"));
-        }
+        assertTrue("modules/sshkeys does not exist", w.exists("modules/sshkeys"));
         assertFixSubmoduleUrlsThrows();
     }
 
-    /* Shows the submodule update is broken now that tests/getSubmodule includes a renamed submodule */
-    @NotImplementedInJGit
     public void test_submodule_update() throws Exception {
         w.init();
         w.git.clone_().url(localMirror()).repositoryName("sub2_origin").execute();
@@ -2714,10 +2685,7 @@ public abstract class GitAPITestCase extends TestCase {
 
         assertTrue("modules/firewall does not exist", w.exists("modules/firewall"));
         assertTrue("modules/ntp does not exist", w.exists("modules/ntp"));
-        // JGit submodule implementation doesn't handle renamed submodules
-        if (w.igit() instanceof CliGitAPIImpl) {
-            assertTrue("modules/sshkeys does not exist", w.exists("modules/sshkeys"));
-        }
+        assertTrue("modules/sshkeys does not exist", w.exists("modules/sshkeys"));
         assertFixSubmoduleUrlsThrows();
     }
 
@@ -2914,13 +2882,14 @@ public abstract class GitAPITestCase extends TestCase {
         checkSymlinkSetting(anotherRepo);
     }
 
-    @NotImplementedInCliGit // Until submodule rename is fixed
     public void test_getSubmoduleUrl() throws Exception {
         w = clone(localMirror());
         w.launchCommand("git", "checkout", "tests/getSubmodules");
         w.git.submoduleInit();
 
         assertEquals("https://github.com/puppetlabs/puppetlabs-firewall.git", w.igit().getSubmoduleUrl("modules/firewall"));
+        assertEquals("https://github.com/puppetlabs/puppetlabs-ntp.git", w.igit().getSubmoduleUrl("modules/ntp"));
+        assertEquals("https://github.com/puppetlabs/puppetlabs-sshkeys.git", w.igit().getSubmoduleUrl("puppetssh"));
 
         try {
             w.igit().getSubmoduleUrl("bogus");
