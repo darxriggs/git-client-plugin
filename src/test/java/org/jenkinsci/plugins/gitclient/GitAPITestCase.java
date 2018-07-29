@@ -571,7 +571,7 @@ public abstract class GitAPITestCase extends TestCase {
         w.git.checkout().ref("origin/master").branch("master").execute();
         check_remote_url("origin");
         assertBranchesExist(w.git.getBranches(), "master");
-        final String alternates = ".git" + File.separator + "objects" + File.separator + "info" + File.separator + "alternates";
+        final String alternates = pathJoin(".git", "objects", "info", "alternates");
         assertFalse("Alternates file found: " + alternates, w.exists(alternates));
         assertFalse("Unexpected shallow clone", w.cgit().isShallowRepository());
     }
@@ -595,7 +595,7 @@ public abstract class GitAPITestCase extends TestCase {
         w.git.checkout().ref("upstream/master").branch("master").execute();
         check_remote_url("upstream");
         assertBranchesExist(w.git.getBranches(), "master");
-        final String alternates = ".git" + File.separator + "objects" + File.separator + "info" + File.separator + "alternates";
+        final String alternates = pathJoin(".git", "objects", "info", "alternates");
         assertFalse("Alternates file found: " + alternates, w.exists(alternates));
     }
 
@@ -610,7 +610,7 @@ public abstract class GitAPITestCase extends TestCase {
         /* JGit does not support shallow clone */
         boolean hasShallowCloneSupport = w.git instanceof CliGitAPIImpl && w.cgit().isAtLeastVersion(1, 5, 0, 0);
         assertEquals("isShallow?", hasShallowCloneSupport, w.cgit().isShallowRepository());
-        String shallow = ".git" + File.separator + "shallow";
+        String shallow = pathJoin(".git", "shallow");
         assertEquals("shallow file existence: " + shallow, hasShallowCloneSupport, w.exists(shallow));
     }
 
@@ -624,7 +624,7 @@ public abstract class GitAPITestCase extends TestCase {
         /* JGit does not support shallow clone */
         boolean hasShallowCloneSupport = w.git instanceof CliGitAPIImpl && w.cgit().isAtLeastVersion(1, 5, 0, 0);
         assertEquals("isShallow?", hasShallowCloneSupport, w.cgit().isShallowRepository());
-        String shallow = ".git" + File.separator + "shallow";
+        String shallow = pathJoin(".git", "shallow");
         assertEquals("shallow file existence: " + shallow, hasShallowCloneSupport, w.exists(shallow));
     }
 
@@ -687,12 +687,12 @@ public abstract class GitAPITestCase extends TestCase {
     }
 
     private void assertAlternatesFileNotFound() {
-        final String alternates = ".git" + File.separator + "objects" + File.separator + "info" + File.separator + "alternates";
+        final String alternates = pathJoin(".git", "objects", "info", "alternates");
         assertFalse("Alternates file found: " + alternates, w.exists(alternates));
     }
 
     private void assertAlternateFilePointsToLocalMirror() throws IOException, InterruptedException {
-        final String alternates = ".git" + File.separator + "objects" + File.separator + "info" + File.separator + "alternates";
+        final String alternates = pathJoin(".git", "objects", "info", "alternates");
 
         assertTrue("Alternates file not found: " + alternates, w.exists(alternates));
         final String expectedContent = localMirror().replace("\\", "/") + "/objects";
@@ -704,8 +704,8 @@ public abstract class GitAPITestCase extends TestCase {
 
     public void test_clone_reference_working_repo() throws IOException, InterruptedException
     {
-        assertTrue("SRC_DIR " + SRC_DIR + " has no .git subdir", (new File(SRC_DIR + File.separator + ".git").isDirectory()));
-        final File shallowFile = new File(SRC_DIR + File.separator + ".git" + File.separator + "shallow");
+        assertTrue("SRC_DIR " + SRC_DIR + " has no .git subdir", new File(SRC_DIR, ".git").isDirectory());
+        final File shallowFile = new File(pathJoin(SRC_DIR, ".git", "shallow"));
         if (shallowFile.exists()) {
             return; /* Reference repository pointing to a shallow checkout is nonsense */
         }
@@ -713,7 +713,7 @@ public abstract class GitAPITestCase extends TestCase {
         w.git.checkout().ref("origin/master").branch("master").execute();
         check_remote_url("origin");
         assertBranchesExist(w.git.getBranches(), "master");
-        final String alternates = ".git" + File.separator + "objects" + File.separator + "info" + File.separator + "alternates";
+        final String alternates = pathJoin(".git", "objects", "info", "alternates");
         assertTrue("Alternates file not found: " + alternates, w.exists(alternates));
         final String expectedContent = SRC_DIR.replace("\\", "/") + "/.git/objects";
         final String actualContent = w.contentOf(alternates);
@@ -776,7 +776,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertEquals("Wrong blob sha1", expectedBlobSHA1, tree.get(0).getObject());
         assertEquals("Wrong number of tree entries", 1, tree.size());
         final String remoteUrl = localMirror();
-        w.igit().setRemoteUrl("origin", remoteUrl, w.repoPath() + File.separator + ".git");
+        w.igit().setRemoteUrl("origin", remoteUrl, pathJoin(w.repoPath(), ".git"));
         assertEquals("Wrong origin default remote", "origin", w.igit().getDefaultRemote("origin"));
         assertEquals("Wrong invalid default remote", "origin", w.igit().getDefaultRemote("invalid"));
     }
@@ -811,7 +811,7 @@ public abstract class GitAPITestCase extends TestCase {
         assertEquals("Wrong null remote URL", originUrl, w.igit().getRemoteUrl("origin", null));
         assertEquals("Wrong blank remote URL", originUrl, w.igit().getRemoteUrl("origin", ""));
         if (w.igit() instanceof CliGitAPIImpl) {
-            String gitDir = w.repoPath() + File.separator + ".git";
+            String gitDir = pathJoin(w.repoPath(), ".git");
             assertEquals("Wrong repoPath/.git remote URL for " + gitDir, originUrl, w.igit().getRemoteUrl("origin", gitDir));
             assertEquals("Wrong .git remote URL", originUrl, w.igit().getRemoteUrl("origin", ".git"));
         } else {
@@ -879,7 +879,7 @@ public abstract class GitAPITestCase extends TestCase {
         w.commitEmpty("init");
 
         String dirName1 = "dir1";
-        String fileName1 = dirName1 + File.separator + "fileName1";
+        String fileName1 = pathJoin(dirName1, "fileName1");
         String fileName2 = "fileName2";
         assertTrue("Did not create dir " + dirName1, w.file(dirName1).mkdir());
         w.touch(fileName1);
@@ -947,7 +947,7 @@ public abstract class GitAPITestCase extends TestCase {
         w.git.commit("ignore");
 
         String dirName1 = "\u5c4f\u5e55\u622a\u56fe-dir-not-added";
-        String fileName1 = dirName1 + File.separator + "\u5c4f\u5e55\u622a\u56fe-fileName1-not-added.xml";
+        String fileName1 = pathJoin(dirName1, "\u5c4f\u5e55\u622a\u56fe-fileName1-not-added.xml");
         String fileName2 = ".test-\u00f8\u00e4\u00fc\u00f6-fileName2-not-added";
         assertTrue("Did not create dir " + dirName1, w.file(dirName1).mkdir());
         w.touch(fileName1);
@@ -1422,12 +1422,12 @@ public abstract class GitAPITestCase extends TestCase {
         w.git.fetch_().from(new URIish("origin"), Collections.singletonList(new RefSpec("refs/heads/*:refs/remotes/origin/*"))).shallow(true).execute();
         check_remote_url("origin");
         assertBranchesExist(w.git.getRemoteBranches(), "origin/master");
-        final String alternates = ".git" + File.separator + "objects" + File.separator + "info" + File.separator + "alternates";
+        final String alternates = pathJoin(".git", "objects", "info", "alternates");
         assertFalse("Alternates file found: " + alternates, w.exists(alternates));
         /* JGit does not support shallow fetch */
         boolean hasShallowFetchSupport = w.git instanceof CliGitAPIImpl && w.cgit().isAtLeastVersion(1, 5, 0, 0);
         assertEquals("isShallow?", hasShallowFetchSupport, w.cgit().isShallowRepository());
-        String shallow = ".git" + File.separator + "shallow";
+        String shallow = pathJoin(".git", "shallow");
         assertEquals("shallow file existence: " + shallow, hasShallowFetchSupport, w.exists(shallow));
     }
 
@@ -1437,12 +1437,12 @@ public abstract class GitAPITestCase extends TestCase {
         w.git.fetch_().from(new URIish("origin"), Collections.singletonList(new RefSpec("refs/heads/*:refs/remotes/origin/*"))).shallow(true).depth(2).execute();
         check_remote_url("origin");
         assertBranchesExist(w.git.getRemoteBranches(), "origin/master");
-        final String alternates = ".git" + File.separator + "objects" + File.separator + "info" + File.separator + "alternates";
+        final String alternates = pathJoin(".git", "objects", "info", "alternates");
         assertFalse("Alternates file found: " + alternates, w.exists(alternates));
         /* JGit does not support shallow fetch */
         boolean hasShallowFetchSupport = w.git instanceof CliGitAPIImpl && w.cgit().isAtLeastVersion(1, 5, 0, 0);
         assertEquals("isShallow?", hasShallowFetchSupport, w.cgit().isShallowRepository());
-        String shallow = ".git" + File.separator + "shallow";
+        String shallow = pathJoin(".git", "shallow");
         assertEquals("shallow file existence: " + shallow, hasShallowFetchSupport, w.exists(shallow));
     }
 
@@ -1618,7 +1618,7 @@ public abstract class GitAPITestCase extends TestCase {
     @Issue("JENKINS-23299")
     public void test_create_tag() throws Exception {
         w.init();
-        String gitDir = w.repoPath() + File.separator + ".git";
+        String gitDir = pathJoin(w.repoPath(), ".git");
         w.commitEmpty("init");
         ObjectId commitId = w.git.revParse("HEAD");
         w.git.tag("test", "this is an annotated tag");
@@ -2437,7 +2437,7 @@ public abstract class GitAPITestCase extends TestCase {
 
     public void test_addSubmodule() throws Exception {
         String sub1 = "sub1-" + java.util.UUID.randomUUID().toString();
-        String readme1 = sub1 + File.separator + "README.adoc";
+        String readme1 = pathJoin(sub1, "README.adoc");
         w.init();
         assertFalse("submodule1 dir found too soon", w.file(sub1).exists());
         assertFalse("submodule1 file found too soon", w.file(readme1).exists());
@@ -2498,7 +2498,7 @@ public abstract class GitAPITestCase extends TestCase {
         r.git.commit("submod-branch1-commit1");
 
         // Make sure that the new file doesn't exist in the repo with remoteTracking
-        String subFile = subModDir + File.separator + "file2";
+        String subFile = pathJoin(subModDir, "file2");
         w.git.submoduleUpdate().recursive(true).remoteTracking(false).execute();
         assertFalse("file2 exists and should not because we didn't update to the tip of the branch (master).", w.exists(subFile));
 
@@ -2756,9 +2756,9 @@ public abstract class GitAPITestCase extends TestCase {
 
         // Setup variables for use in tests
         String submodDir = "submod1" + java.util.UUID.randomUUID().toString();
-        String subFile1 = submodDir + File.separator + "file1";
-        String subFile2 = submodDir + File.separator + "file2";
-        String subFile3 = submodDir + File.separator + "file3";
+        String subFile1 = pathJoin(submodDir, "file1");
+        String subFile2 = pathJoin(submodDir, "file2");
+        String subFile3 = pathJoin(submodDir, "file3");
 
         // Add new GIT repo to w, at the master branch
         w.git.addSubmodule(r.repoPath(), submodDir);
@@ -4351,7 +4351,7 @@ public abstract class GitAPITestCase extends TestCase {
     public void test_isBareRepository_working_repoPath_dot_git() throws IOException, InterruptedException {
         w.init();
         w.commitEmpty("Not-a-bare-repository-false-repoPath-dot-git");
-        assertFalse("repoPath/.git is a bare repository", w.igit().isBareRepository(w.repoPath() + File.separator + ".git"));
+        assertFalse("repoPath/.git is a bare repository", w.igit().isBareRepository(pathJoin(w.repoPath(), ".git")));
     }
 
     @Deprecated
@@ -4568,7 +4568,7 @@ public abstract class GitAPITestCase extends TestCase {
     private void commitFile(String dirName, String fileName, boolean longpathsEnabled) throws Exception {
         assertTrue("Didn't mkdir " + dirName, w.file(dirName).mkdir());
 
-        String fullName = dirName + File.separator + fileName;
+        String fullName = pathJoin(dirName, fileName);
         w.touch(fullName, fullName + " content " + UUID.randomUUID().toString());
 
         boolean shouldThrow = !longpathsEnabled &&
@@ -4748,5 +4748,9 @@ public abstract class GitAPITestCase extends TestCase {
         repositoryWorkingArea.cgit().commit("submodule");
 
         return workingArea;
+    }
+
+    private String pathJoin(String first, String ... more) {
+        return Paths.get(first, more).toString();
     }
 }
