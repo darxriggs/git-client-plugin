@@ -46,10 +46,10 @@ public interface CheckoutCommand extends GitCommand {
     /**
      * timeout.
      *
-     * @param timeout a {@link java.lang.Integer} object.
+     * @param timeout timeout in minutes
      * @return a {@link org.jenkinsci.plugins.gitclient.CheckoutCommand} object.
      */
-    CheckoutCommand timeout(Integer timeout);
+    CheckoutCommand timeout(int timeout);
 
     /**
      * Call "git lfs pull" for the given remote after checkout.

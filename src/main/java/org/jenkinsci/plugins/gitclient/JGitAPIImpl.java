@@ -285,7 +285,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public CheckoutCommand timeout(Integer timeout) {
+            public CheckoutCommand timeout(int timeout) {
                 // noop in jgit
                 return this;
             }
@@ -581,7 +581,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public org.jenkinsci.plugins.gitclient.FetchCommand timeout(Integer timeout) {
+            public org.jenkinsci.plugins.gitclient.FetchCommand timeout(int timeout) {
                 // noop in jgit
                 return this;
             }
@@ -593,7 +593,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public org.jenkinsci.plugins.gitclient.FetchCommand depth(Integer depth) {
+            public org.jenkinsci.plugins.gitclient.FetchCommand depth(int depth) {
                 listener.getLogger().println("[WARNING] JGit doesn't support shallow clone and therefore depth is meaningless. This flag is ignored");
                 return this;
             }
@@ -1373,7 +1373,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public CloneCommand timeout(Integer timeout) {
+            public CloneCommand timeout(int timeout) {
             	this.timeout = timeout;
             	return this;
             }
@@ -1391,7 +1391,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public CloneCommand depth(Integer depth) {
+            public CloneCommand depth(int depth) {
                 listener.getLogger().println("[WARNING] JGit doesn't support shallow clone and therefore depth is meaningless. This flag is ignored");
                 return this;
             }
@@ -1851,7 +1851,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public PushCommand timeout(Integer timeout) {
+            public PushCommand timeout(int timeout) {
             	// noop in jgit
                 return this;
             }
@@ -2186,7 +2186,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand timeout(Integer timeout) {
+            public org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand timeout(int timeout) {
             	// noop in jgit
                 return this;
             }
@@ -2200,7 +2200,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand depth(Integer depth) {
+            public org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand depth(int depth) {
                 listener.getLogger().println("[WARNING] JGit doesn't support shallow clone and therefore depth is meaningless. This flag is ignored");
                 return this;
             }

@@ -50,10 +50,10 @@ public interface FetchCommand extends GitCommand {
     /**
      * timeout.
      *
-     * @param timeout a {@link java.lang.Integer} object.
+     * @param timeout timeout in minutes
      * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
      */
-    FetchCommand timeout(Integer timeout);
+    FetchCommand timeout(int timeout);
 
     FetchCommand tags(boolean tags);
 
@@ -64,5 +64,5 @@ public interface FetchCommand extends GitCommand {
      * @param depth number of revisions to be included in shallow clone
      * @return a {@link org.jenkinsci.plugins.gitclient.CloneCommand} object.
      */
-    FetchCommand depth(Integer depth);
+    FetchCommand depth(int depth);
 }

@@ -54,10 +54,10 @@ public interface SubmoduleUpdateCommand extends GitCommand {
     /**
      * timeout.
      *
-     * @param timeout a {@link java.lang.Integer} object.
+     * @param timeout timeout in minutes
      * @return a {@link org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand} object.
      */
-    SubmoduleUpdateCommand timeout(Integer timeout);
+    SubmoduleUpdateCommand timeout(int timeout);
 
     /**
      * Only clone the most recent history, not preceding history.  Depth of the
@@ -75,7 +75,7 @@ public interface SubmoduleUpdateCommand extends GitCommand {
      * @param depth number of revisions to be included in shallow clone (requires git&gt;=1.8.4)
      * @return a {@link org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand} object.
      */
-    SubmoduleUpdateCommand depth(Integer depth);
+    SubmoduleUpdateCommand depth(int depth);
 
     /**
      * Update submodules in parallel with the given number of threads. Note that this parallelism only applies to the

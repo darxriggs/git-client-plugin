@@ -54,8 +54,8 @@ public interface PushCommand extends GitCommand {
     /**
      * timeout.
      *
-     * @param timeout a {@link java.lang.Integer} object.
+     * @param timeout timeout in minutes
      * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
      */
-    PushCommand timeout(Integer timeout);
+    PushCommand timeout(int timeout);
 }

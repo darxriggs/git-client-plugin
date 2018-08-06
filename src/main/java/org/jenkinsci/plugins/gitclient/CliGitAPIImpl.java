@@ -460,7 +460,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             private boolean shallow;
             private Integer timeout;
             private boolean tags = true;
-            private Integer depth = 1;
+            private int depth = 1;
 
             @Override
             public FetchCommand from(URIish remote, List<RefSpec> refspecs) {
@@ -493,13 +493,13 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public FetchCommand timeout(Integer timeout) {
+            public FetchCommand timeout(int timeout) {
             	this.timeout = timeout;
             	return this;
             }
 
             @Override
-            public FetchCommand depth(Integer depth) {
+            public FetchCommand depth(int depth) {
                 this.depth = depth;
                 return this;
             }
@@ -522,9 +522,6 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
                 if (prune) args.add("--prune");
 
                 if (shallow) {
-                    if (depth == null) {
-                        depth = 1;
-                    }
                     args.add("--depth=" + depth);
                 }
 
@@ -650,7 +647,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             private Integer timeout;
             private boolean tags = true;
             private List<RefSpec> refspecs;
-            private Integer depth = 1;
+            private int depth = 1;
 
             @Override
             public CloneCommand url(String url) {
@@ -705,13 +702,13 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public CloneCommand timeout(Integer timeout) {
+            public CloneCommand timeout(int timeout) {
             	this.timeout = timeout;
             	return this;
             }
 
             @Override
-            public CloneCommand depth(Integer depth) {
+            public CloneCommand depth(int depth) {
                 this.depth = depth;
                 return this;
             }
@@ -790,12 +787,15 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
                 if (refspecs == null) {
                     refspecs = Collections.singletonList(new RefSpec("+refs/heads/*:refs/remotes/"+origin+"/*"));
                 }
-                fetch_().from(urIish, refspecs)
+                FetchCommand fetchCommand = fetch_()
+                        .from(urIish, refspecs)
                         .shallow(shallow)
                         .depth(depth)
-                        .timeout(timeout)
-                        .tags(tags)
-                        .execute();
+                        .tags(tags);
+                if (timeout != null) {
+                    fetchCommand = fetchCommand.timeout(timeout);
+                }
+                fetchCommand.execute();
                 setRemoteUrl(origin, url);
                 for (RefSpec refSpec : refspecs) {
                     launchCommand("config", "--add", "remote." + origin + ".fetch", refSpec.toString());
@@ -1290,7 +1290,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             private String  ref                            = null;
             private Map<String, String> submodBranch   = new HashMap<>();
             private Integer timeout;
-            private Integer depth = 1;
+            private int depth = 1;
             private int threads = 1;
 
             @Override
@@ -1324,7 +1324,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public SubmoduleUpdateCommand timeout(Integer timeout) {
+            public SubmoduleUpdateCommand timeout(int timeout) {
                 this.timeout = timeout;
                 return this;
             }
@@ -1336,7 +1336,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public SubmoduleUpdateCommand depth(Integer depth) {
+            public SubmoduleUpdateCommand depth(int depth) {
                 this.depth = depth;
                 return this;
             }
@@ -1379,9 +1379,6 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
                         args.add("--reference", ref);
                 }
                 if (shallow) {
-                    if (depth == null) {
-                        depth = 1;
-                    }
                     if (isAtLeastVersion(1, 8, 4, 0)) {
                         args.add("--depth=" + depth);
                     } else {
@@ -2482,7 +2479,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public PushCommand timeout(Integer timeout) {
+            public PushCommand timeout(int timeout) {
                 this.timeout = timeout;
                 return this;
             }
@@ -2662,7 +2659,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
             }
 
             @Override
-            public CheckoutCommand timeout(Integer timeout) {
+            public CheckoutCommand timeout(int timeout) {
                 this.timeout = timeout;
                 return this;
             }

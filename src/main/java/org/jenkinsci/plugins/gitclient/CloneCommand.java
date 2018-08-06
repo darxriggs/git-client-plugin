@@ -78,10 +78,10 @@ public interface CloneCommand extends GitCommand {
     /**
      * timeout.
      *
-     * @param timeout a {@link java.lang.Integer} object.
+     * @param timeout timeout in minutes
      * @return a {@link org.jenkinsci.plugins.gitclient.CloneCommand} object.
      */
-    CloneCommand timeout(Integer timeout);
+    CloneCommand timeout(int timeout);
 
     /**
      * When we just need to clone repository without populating the workspace (for instance when sparse checkouts are used).
@@ -114,5 +114,5 @@ public interface CloneCommand extends GitCommand {
      * @param depth number of revisions to be included in shallow clone
      * @return a {@link org.jenkinsci.plugins.gitclient.CloneCommand} object.
      */
-    CloneCommand depth(Integer depth);
+    CloneCommand depth(int depth);
 }
