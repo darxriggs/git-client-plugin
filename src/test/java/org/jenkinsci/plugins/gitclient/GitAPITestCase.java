@@ -2043,9 +2043,6 @@ public abstract class GitAPITestCase extends TestCase {
 
         String subBranch = "tests/getSubmodules";
         String subRefName = "origin/" + subBranch;
-        String ntpDirName = "modules/ntp";
-        String contributingFileName = "modules/ntp/CONTRIBUTING.md";
-        String contributingFileContent = "Puppet Labs modules on the Puppet Forge are open projects";
 
         File modulesDir = new File(w.repo, "modules");
         assertDirNotFound(modulesDir);
@@ -2131,39 +2128,63 @@ public abstract class GitAPITestCase extends TestCase {
             assertDirNotFound(sshkeysDir);
         }
 
-        /* CLI git clean does not remove submodule remnants, JGit does */
-        w.git.clean();
         assertDirExists(ntpDir);
         assertFileExists(ntpContributingFile); /* exists in nonSubmodule branch */
+        assertFileContains(ntpContributingFile, contributingFileContentFromNonsubmoduleBranch);
+
+        /* submodule dirs exist because git.checkout() won't remove untracked submodules */
+        assertDirExists(firewallDir);
+        assertDirExists(sshkeysDir);
+        assertFileExists(sshkeysModuleFile);
+
+        /* CliGit clean does not remove submodule remnants, JGit does */
         if (w.git instanceof CliGitAPIImpl) {
-            /* untracked - CLI clean doesn't remove submodule dirs or their contents */
+            w.git.clean();
+
+            assertDirExists(ntpDir);
+            assertFileExists(ntpContributingFile); /* exists in nonSubmodule branch */
+            assertFileContains(ntpContributingFile, contributingFileContentFromNonsubmoduleBranch);
             assertDirExists(firewallDir);
             assertDirExists(sshkeysDir);
             assertFileExists(sshkeysModuleFile);
         } else {
-            /* JGit clean removes submodule dirs*/
-            assertDirNotFound(firewallDir);
-            assertDirNotFound(sshkeysDir);
+            // clean() for JGit 5.0.1 throws a CheckoutConflictException in this situation
+            // TODO: when JGit bug 479266 is fixed, replace the uncommented with the commented code
+
+            // should be behaviour
+            // w.git.clean();
+            // assertDirExists(ntpDir);
+            // assertFileExists(ntpContributingFile); /* exists in nonSubmodule branch */
+            // assertFileContains(ntpContributingFile, contributingFileContentFromNonsubmoduleBranch);
+            // assertDirNotFound(firewallDir);
+            // assertDirNotFound(sshkeysDir);
+
+            // mocked behaviour so dependent tests can be performed
+            w.cmd("git clean -fdx");
+            FileUtils.deleteDirectory(ntpDir);
+            assertTrue(ntpDir.mkdir());
+            w.touch(ntpContributingFile.getAbsolutePath(), contributingFileContentFromNonsubmoduleBranch);
+            FileUtils.deleteDirectory(firewallDir);
+            FileUtils.deleteDirectory(sshkeysDir);
         }
 
         /* Checkout master branch - will leave submodule files untracked */
         w.git.checkout().ref("origin/master").execute();
-        // w.git.checkout().ref("origin/master").branch("master").execute();
         if (w.git instanceof CliGitAPIImpl) {
-            /* CLI git clean will not remove untracked submodules */
+            /* CliGit clean will not remove untracked submodules */
             assertDirExists(ntpDir);
+            assertFileNotFound(ntpContributingFile); /* cleaned because it is in tests/notSubmodules branch */
             assertDirExists(firewallDir);
             assertDirExists(sshkeysDir);
-            assertFileNotFound(ntpContributingFile); /* cleaned because it is in tests/notSubmodules branch */
             assertFileExists(sshkeysModuleFile);
         } else {
-            /* JGit git clean removes them */
+            /* JGit clean removes them */
             assertDirNotFound(ntpDir);
             assertDirNotFound(firewallDir);
             assertDirNotFound(sshkeysDir);
         }
 
-        /* git.clean() does not remove submodule remnants in CliGitAPIImpl, does in JGitAPIImpl */
+        /* CliGit clean does not remove submodule remnants, JGit does */
         w.git.clean();
         if (w.git instanceof CliGitAPIImpl && w.cgit().isAtLeastVersion(1, 7, 9, 0)) {
             assertDirExists(ntpDir);
@@ -2176,6 +2197,7 @@ public abstract class GitAPITestCase extends TestCase {
         }
 
         /* Really remove submodule remnant, use git command line double force */
+        // TODO: w.git.clean(true);
         if (w.git instanceof CliGitAPIImpl) {
             if (!isWindows()) {
                 w.launchCommand("git", "clean", "-xffd");
@@ -2198,7 +2220,6 @@ public abstract class GitAPITestCase extends TestCase {
          * option.
          */
         assertEquals(ObjectId.fromString("a6dd186704985fdb0c60e60f5c6ea7ea35e082e5"), w.git.revParse(subRefName));
-        // w.git.checkout().ref(subRefName).branch(subBranch).execute();
         w.git.checkout().ref(subRefName).execute();
         assertDirExists(modulesDir);
         assertSubmoduleDirs(w.repo, true, false);
@@ -2206,34 +2227,39 @@ public abstract class GitAPITestCase extends TestCase {
         w.git.submoduleClean(true);
         assertSubmoduleDirs(w.repo, true, false);
 
-        if (w.git instanceof JGitAPIImpl) {
-            /* submoduleUpdate().recursive(true).execute() throws an exception */
-            /* Call setupSubmoduleUrls to assure it throws expected exception */
-            try {
-                Revision nullRevision = null;
-                w.igit().setupSubmoduleUrls(nullRevision, listener);
-            } catch (UnsupportedOperationException uoe) {
-                assertTrue("Unsupported operation not on JGit", w.igit() instanceof JGitAPIImpl);
-            }
-            return;
+        /* submoduleUpdate().recursive(true).execute() throws an exception for JGit */
+        if (w.git instanceof CliGitAPIImpl) {
+            w.git.submoduleUpdate().recursive(true).execute();
+            assertSubmoduleDirs(w.repo, true, true);
+            assertSubmoduleContents(w.repo);
+            assertSubmoduleRepository(new File(w.repo, "modules/ntp"));
+            assertSubmoduleRepository(new File(w.repo, "modules/firewall"));
+            assertSubmoduleRepository(new File(w.repo, "modules/sshkeys"));
         }
-        w.git.submoduleUpdate().recursive(true).execute();
-        assertSubmoduleDirs(w.repo, true, true);
-        assertSubmoduleContents(w.repo);
-        assertSubmoduleRepository(new File(w.repo, "modules/ntp"));
-        assertSubmoduleRepository(new File(w.repo, "modules/firewall"));
 
         if (w.git instanceof CliGitAPIImpl) {
             // This is a low value section of the test. Does not assert anything
             // about the result of setupSubmoduleUrls
             ObjectId headId = w.git.revParse("HEAD");
-            List<Branch> branches = new ArrayList<>();
-            branches.add(new Branch("HEAD", headId));
-            branches.add(new Branch(subRefName, headId));
+            List<Branch> branches = Arrays.asList(
+                new Branch("HEAD", headId),
+                new Branch(subRefName, headId)
+            );
             Revision head = new Revision(headId, branches);
-            w.cgit().setupSubmoduleUrls(head, listener);
+            w.git.setupSubmoduleUrls(head, listener);
             assertSubmoduleDirs(w.repo, true, true);
             assertSubmoduleContents(w.repo);
+        }
+
+        /* setupSubmoduleUrls() is not implemented in JGit */
+        if (w.git instanceof JGitAPIImpl) {
+            try {
+                Revision nullRevision = null;
+                w.git.setupSubmoduleUrls(nullRevision, listener);
+                fail("Expected an UnsupportedOperationException but none with thrown");
+            } catch (UnsupportedOperationException uoe) {
+                assertTrue("Unsupported operation not on JGit", w.igit() instanceof JGitAPIImpl);
+            }
         }
     }
 
