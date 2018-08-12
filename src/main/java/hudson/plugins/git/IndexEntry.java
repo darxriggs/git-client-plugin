@@ -13,16 +13,16 @@ public class IndexEntry implements Serializable {
     String mode, type, object, file;
 
     /**
-     * Returns the mode of this entry as a String.
+     * Returns the mode.
      *
-     * @return mode of this entry as a {@link java.lang.String}.
+     * @return the mode.
      */
     public String getMode() {
         return mode;
     }
 
     /**
-     * Sets the mode of this Entry.
+     * Sets the mode.
      *
      * @param mode value to be assigned
      */
@@ -31,75 +31,71 @@ public class IndexEntry implements Serializable {
     }
 
     /**
-     * Getter for the field <code>type</code>.
+     * Returns the type.
      *
-     * @return a {@link java.lang.String} object.
+     * @return the type.
      */
     public String getType() {
         return type;
     }
 
     /**
-     * Setter for the field <code>type</code>.
+     * Sets the type.
      *
-     * @param type a {@link java.lang.String} object.
+     * @param type a {@link String} object.
      */
     public void setType(String type) {
         this.type = type;
     }
 
     /**
-     * Getter for the field <code>object</code>.
+     * Returns the associated object.
      *
-     * @return a {@link java.lang.String} object.
+     * @return the associated object.
      */
     public String getObject() {
         return object;
     }
 
     /**
-     * Setter for the field <code>object</code>.
+     * Sets the associated object.
      *
-     * @param object a {@link java.lang.String} object.
+     * @param object the associated object.
      */
     public void setObject(String object) {
         this.object = object;
     }
 
     /**
-     * Getter for the field <code>file</code>.
+     * Returns the associated file.
      *
-     * @return a {@link java.lang.String} object.
+     * @return the associated file.
      */
     public String getFile() {
         return file;
     }
 
     /**
-     * Setter for the field <code>file</code>.
+     * Sets the associated file.
      *
-     * @param file a {@link java.lang.String} object.
+     * @param file the associated file
      */
     public void setFile(String file) {
         this.file = file;
     }
 
-    /**
-     * toString.
-     *
-     * @return a {@link java.lang.String} object.
-     */
+    @Override
     public String toString() {
         return String.format("IndexEntry[mode=%s,type=%s,file=%s,object=%s]",mode,type,file,object);
     }
-  
+
     /**
-     * Constructor for IndexEntry.
+     * Constructs an index entry.
      *
-     * @param mode a {@link java.lang.String} object.
-     * @param type a {@link java.lang.String} object.
-     * @param object a {@link java.lang.String} object.
-     * @param file a {@link java.lang.String} object.
+     * @param mode the mode
+     * @param type the type
+     * @param object the associated object
+     * @param file the associated file
      */
     public IndexEntry(String mode, String type, String object, String file) {
         this.mode = mode;
@@ -146,9 +142,9 @@ public class IndexEntry implements Serializable {
     }
 
     /**
-     * Populates an {@link hudson.plugins.git.IndexEntry} from the current node that {@link org.eclipse.jgit.submodule.SubmoduleWalk} is pointing to.
+     * Populates an {@link IndexEntry} from the current node that {@link SubmoduleWalk} is pointing to.
      *
-     * @param walk a {@link org.eclipse.jgit.submodule.SubmoduleWalk} object.
+     * @param walk a {@link SubmoduleWalk} object.
      */
     public IndexEntry(SubmoduleWalk walk) {
         this("160000","commit",walk.getObjectId().name(),walk.getPath());

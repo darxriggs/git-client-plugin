@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * JGit as {@link hudson.plugins.git.GitTool}
+ * JGit as {@link GitTool}
  *
  * @author Kohsuke Kawaguchi
  */
@@ -20,7 +20,7 @@ public class JGitTool extends GitTool {
     /**
      * Constructor for JGitTool.
      *
-     * @param properties a {@link java.util.List} object.
+     * @param properties a {@link List} object.
      */
     @DataBoundConstructor
     public JGitTool(List<? extends ToolProperty<?>> properties) {

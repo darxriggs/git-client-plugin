@@ -3,36 +3,39 @@ package org.jenkinsci.plugins.gitclient;
 import org.eclipse.jgit.lib.ObjectId;
 
 /**
- * MergeCommand interface.
+ * Command to merge references.
  *
  * @author <a href="mailto:nicolas.deloof@gmail.com">Nicolas De Loof</a>
  */
 public interface MergeCommand extends GitCommand {
 
     /**
-     * setRevisionToMerge.
+     * Sets the revision to merge.
      *
-     * @param rev a {@link org.eclipse.jgit.lib.ObjectId} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.MergeCommand} object.
+     * @param rev a {@link ObjectId} object.
+     * @return a {@link MergeCommand} object.
      */
     MergeCommand setRevisionToMerge(ObjectId rev);
 
     /**
-     * setMessage.
+     * Sets the merge commit message.
      *
-     * @param message the desired comment for the merge command.
-     * @return a {@link org.jenkinsci.plugins.gitclient.MergeCommand} object.
+     * @param message the merge commit message
+     * @return a {@link MergeCommand} object.
      */
     MergeCommand setMessage(String message);
 
     /**
-     * setStrategy.
+     * Sets the merge strategy.
      *
-     * @param strategy a {@link org.jenkinsci.plugins.gitclient.MergeCommand.Strategy} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.MergeCommand} object.
+     * @param strategy a {@link MergeCommand.Strategy} object.
+     * @return a {@link MergeCommand} object.
      */
     MergeCommand setStrategy(Strategy strategy);
 
+    /**
+     * The merge strategy.
+     */
     public enum Strategy {
         DEFAULT, RESOLVE, RECURSIVE, OCTOPUS, OURS, SUBTREE, RECURSIVE_THEIRS;
 
@@ -43,19 +46,27 @@ public interface MergeCommand extends GitCommand {
     }
 
     /**
-     * Select the fast forward mode.
-     * The name FastForwardMode collides with org.eclipse.jgit.api.MergeCommand.FastForwardMode
-     * so we have to choose a different name.
+     * Sets the fast forward mode.
      *
-     * @param fastForwardMode mode to be used in this merge
-     * @return MergeCommand to be used in fluent calls
+     * @param fastForwardMode mode used for merging
+     * @return a {@link MergeCommand} object.
      */
     MergeCommand setGitPluginFastForwardMode(GitPluginFastForwardMode fastForwardMode);
 
+    /**
+     * The fast forward mode.
+     *
+     * The name {@code FastForwardMode} collides with
+     * {@link org.eclipse.jgit.api.MergeCommand.FastForwardMode}
+     * so a different name had to be chosen.
+     */
     public enum GitPluginFastForwardMode {
-        FF,        // Default option, fast forward update the branch pointer only
-        FF_ONLY,   // Create a merge commit even for a fast forward
-        NO_FF;     // Abort unless the merge is a fast forward
+        /** fast forward update the branch pointer only (default) */
+        FF,
+        /** create a merge commit even for a fast forward */
+        FF_ONLY,
+        /** abort unless the merge is a fast forward */
+        NO_FF;
 
         @Override
         public String toString() {
@@ -64,18 +75,18 @@ public interface MergeCommand extends GitCommand {
     }
 
     /**
-     * setSquash
+     * Sets if commits should be squashed together before merge.
      *
-     * @param squash - whether to squash commits or not
-     * @return a {@link org.jenkinsci.plugins.gitclient.MergeCommand} object.
+     * @param squash whether to squash commits or not
+     * @return a {@link MergeCommand} object.
      */
     MergeCommand setSquash(boolean squash);
 
     /**
-     * setCommit
+     * Sets if the merge result should be committed.
      *
-     * @param commit - whether or not to commit the result after a successful merge.
-     * @return a {@link org.jenkinsci.plugins.gitclient.MergeCommand} object.
+     * @param commit whether or not to commit the result after a successful merge
+     * @return a {@link MergeCommand} object.
      */
     MergeCommand setCommit(boolean commit);
 }

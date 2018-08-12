@@ -6,63 +6,74 @@ import org.eclipse.jgit.transport.URIish;
 import java.util.List;
 
 /**
- * FetchCommand interface.
+ * Command to fetch from a repository.
  *
  * @author <a href="mailto:nicolas.deloof@gmail.com">Nicolas De Loof</a>
  */
 public interface FetchCommand extends GitCommand {
 
     /**
-     * from.
+     * Specifies what to fetch.
      *
      * @param remote a {@link org.eclipse.jgit.transport.URIish} object.
      * @param refspecs a {@link java.util.List} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
+     * @return a {@link FetchCommand} object.
      */
     FetchCommand from(URIish remote, List<RefSpec> refspecs);
 
     /**
-     * prune.
+     * Prune stale remote references.
      *
-     * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
+     * @return a {@link FetchCommand} object.
      * @deprecated favour {@link #prune(boolean)}
      */
     @Deprecated
     FetchCommand prune();
 
     /**
-     * prune.
+     * Prune stale remote references.
      *
-     * @param prune {@code true} if the fetch should prune.
-     * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
+     * @param prune whether fetch should prune
+     * @return a {@link FetchCommand} object.
      * @since 2.5.0
      */
     FetchCommand prune(boolean prune);
 
     /**
-     * shallow.
+     * Only fetch the most recent history, not preceding history.
+     * <p>
+     * Depth of the shallow fetch is controlled by the {@link #depth} method.
      *
-     * @param shallow a boolean.
-     * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
+     * @param shallow whether the fetch is shallow
+     * @return a {@link FetchCommand} object.
      */
     FetchCommand shallow(boolean shallow);
-    
+
     /**
-     * timeout.
+     * Timeout after which the command should be terminated.
      *
-     * @param timeout a {@link java.lang.Integer} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
+     * @param timeout timeout in minutes
+     * @return a {@link FetchCommand} object.
      */
     FetchCommand timeout(Integer timeout);
 
+    /**
+     * Request that tags and their references are not fetched.
+     * <p>
+     * Default is to fetch tags.
+     *
+     * @param tags whether tags are fetched
+     * @return a {@link FetchCommand} object.
+     */
     FetchCommand tags(boolean tags);
 
     /**
      * When shallow cloning, allow for a depth to be set in cases where you need more than the immediate last commit.
-     * Has no effect if shallow is set to false (default)
+     * <p>
+     * Has no effect if {@link #shallow} is set to {@code false} (default).
      *
      * @param depth number of revisions to be included in shallow clone
-     * @return a {@link org.jenkinsci.plugins.gitclient.CloneCommand} object.
+     * @return a {@link FetchCommand} object.
      */
     FetchCommand depth(Integer depth);
 }

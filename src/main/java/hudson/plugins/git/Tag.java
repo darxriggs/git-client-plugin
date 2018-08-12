@@ -14,66 +14,61 @@ public class Tag extends GitObject {
     public String commitMessage;
 
     /**
-     * Getter for the field <code>commitMessage</code>.
+     * Returns the commit message.
      *
-     * @return a {@link java.lang.String} object.
+     * @return the commit message.
      */
     public String getCommitMessage() {
         return commitMessage;
     }
 
     /**
-     * Setter for the field <code>commitMessage</code>.
+     * Sets the commit message.
      *
-     * @param commitMessage a {@link java.lang.String} object.
+     * @param commitMessage the commit message
      */
     public void setCommitMessage(String commitMessage) {
         this.commitMessage = commitMessage;
     }
 
     /**
-     * Constructor for Tag.
+     * Constructs a tag.
      *
-     * @param name a {@link java.lang.String} object.
-     * @param sha1 a {@link org.eclipse.jgit.lib.ObjectId} object.
+     * @param name a {@link String} object.
+     * @param sha1 a {@link ObjectId} object.
      */
     public Tag(String name, ObjectId sha1) {
         super(name, sha1);
     }
 
     /**
-     * Get the sha1 of the commit associated with this tag
+     * Returns the SHA1 hash of the tagged commit.
      *
-     * @return a {@link java.lang.String} object.
+     * @return the SHA1 hash of the tagged commit
      */
     public String getCommitSHA1() {
         return commitSHA1;
     }
 
     /**
-     * Setter for the field <code>commitSHA1</code>.
+     * Sets the SHA1 hash of the tagged commit.
      *
-     * @param commitSHA1 a {@link java.lang.String} object.
+     * @param commitSHA1 the SHA1 hash of the tagged commit
      */
     public void setCommitSHA1(String commitSHA1) {
         this.commitSHA1 = commitSHA1;
     }
 
-    /**
-     * Returns a hash code value for the object. Considers sha1 and name in the
-     * calculation.
-     *
-     * @return a hash code value for this object.
-     */
     @Override
     public int hashCode() {
         return super.hashCode();
     }
 
     /**
-     * Indicates whether some other object is "equal to" this one. Includes sha1
-     * and name in the comparison. Objects of subclasses of this object are not
-     * equal to objects of this class, even if they add no fields.
+     * Indicates whether some other object is "equal to" this one.
+     *
+     * Includes sha1 and name in the comparison. Objects of subclasses of this object
+     * are not equal to objects of this class, even if they add no fields.
      *
      * @param obj the reference object with which to compare.
      * @return true if this object is the same as the obj argument; false

@@ -8,8 +8,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * An object in a git repository. Includes the SHA1 and name of the
- * object stored in git (tag, branch, etc.).
+ * An object in a git repository.
+ *
+ * Includes the SHA1 and name of the object stored in git (tag, branch, etc.).
  */
 @ExportedBean(defaultVisibility = 999)
 public class GitObject implements Serializable {
@@ -20,10 +21,10 @@ public class GitObject implements Serializable {
     final String name;
 
     /**
-     * Constructor for GitObject, a named SHA1 (tag, branch, etc.).
+     * Constructs a git object, a named SHA1 (tag, branch, etc.).
      *
-     * @param name {@link java.lang.String} name of this object
-     * @param sha1 {@link org.eclipse.jgit.lib.ObjectId} which uniquely identifies this object
+     * @param name {@link String} name of this object
+     * @param sha1 {@link ObjectId} which uniquely identifies this object
      */
     public GitObject(String name, ObjectId sha1) {
         this.name = name;
@@ -31,9 +32,9 @@ public class GitObject implements Serializable {
     }
 
     /**
-     * Returns the SHA1 hash of this git object as an {@link org.eclipse.jgit.lib.ObjectId}.
+     * Returns the SHA1 hash of this git object as an {@link ObjectId}.
      *
-     * @return {@link org.eclipse.jgit.lib.ObjectId} SHA1 of the object.
+     * @return {@link ObjectId} SHA1 of the object.
      */
     public ObjectId getSHA1() {
         return sha1;
@@ -42,7 +43,7 @@ public class GitObject implements Serializable {
     /**
      * Returns the name of this git object (branch name, tag name, etc.).
      *
-     * @return {@link java.lang.String} name of the object.
+     * @return {@link String} name of the object.
      */
     @Exported
     public String getName() {
@@ -50,9 +51,9 @@ public class GitObject implements Serializable {
     }
 
     /**
-     * Returns the SHA1 hash of this git object as a String.
+     * Returns the SHA1 hash of this git object as a {@link String}.
      *
-     * @return {@link java.lang.String} SHA1 of the object.
+     * @return {@link String} SHA1 of the object.
      */
     @Exported(name="SHA1")
     public String getSHA1String() {
@@ -60,10 +61,7 @@ public class GitObject implements Serializable {
     }
 
     /**
-     * Returns a hash code value for the object. Considers sha1 and name in the
-     * calculation.
-     *
-     * @return a hash code value for this object.
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -74,13 +72,13 @@ public class GitObject implements Serializable {
     }
 
     /**
-     * Indicates whether some other object is "equal to" this one. Includes sha1
-     * and name in the comparison. Objects of subclasses of this object are not
-     * equal to objects of this class, even if they add no fields.
+     * Indicates whether some other object is "equal to" this one.
+     *
+     * Includes sha1 and name in the comparison. Objects of subclasses of this object
+     * are not equal to objects of this class, even if they add no fields.
      *
      * @param obj the reference object with which to compare.
-     * @return true if this object is the same as the obj argument; false
-     * otherwise
+     * @return true if this object is the same as the obj argument; false otherwise
      */
     @Override
     public boolean equals(Object obj) {

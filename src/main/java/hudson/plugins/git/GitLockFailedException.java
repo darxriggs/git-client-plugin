@@ -1,42 +1,43 @@
 package hudson.plugins.git;
 
 /**
- * Exception which reports failure to lock a git repository. Lock failures are
- * a special case and may indicate that a retry attempt might succeed.
+ * Records failure to lock a git repository.
+ *
+ * Lock failures are a special case and may indicate that a retry attempt might succeed.
  */
 public class GitLockFailedException extends GitException {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Constructor for GitLockFailedException.
+     * Constructs a git lock failed exception.
      */
     public GitLockFailedException() {
         super();
     }
 
     /**
-     * Constructor for GitLockFailedException.
+     * Constructs a git lock failed exception.
      *
-     * @param message {@link java.lang.String} description to associate with this exception
+     * @param message {@link String} description to associate with this exception
      */
     public GitLockFailedException(String message) {
         super(message);
     }
 
     /**
-     * Constructor for GitLockFailedException.
+     * Constructs a git lock failed exception.
      *
-     * @param cause {@link java.lang.Throwable} which caused this exception
+     * @param cause {@link Throwable} which caused this exception
      */
     public GitLockFailedException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Constructor for GitLockFailedException.
+     * Constructs a git lock failed exception.
      *
-     * @param message {@link java.lang.String} description to associate with this exception
-     * @param cause {@link java.lang.Throwable} which caused this exception
+     * @param message {@link String} description to associate with this exception
+     * @param cause {@link Throwable} which caused this exception
      */
     public GitLockFailedException(String message, Throwable cause) {
         super(message, cause);

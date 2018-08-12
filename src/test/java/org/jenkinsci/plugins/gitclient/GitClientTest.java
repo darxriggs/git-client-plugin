@@ -1479,9 +1479,7 @@ public class GitClientTest {
             assertSubmoduleStatus(cloneGitClient, true, "ntp");
         }
 
-        /**
-         * With extra -f argument, git clean removes submodules
-         */
+        /* With extra -f argument, git clean removes submodules */
         CliGitCommand cloneRepoCmd = new CliGitCommand(cloneGitClient);
         cloneRepoCmd.run("clean", "-xffd");
         assertFalse("cloneFirewallDir not deleted " + cloneFirewallDir, cloneFirewallDir.isDirectory());

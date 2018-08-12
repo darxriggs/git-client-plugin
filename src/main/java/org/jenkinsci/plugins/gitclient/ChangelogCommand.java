@@ -6,10 +6,8 @@ import java.io.Writer;
 
 /**
  * Command builder for generating changelog in the format {@code GitSCM} expects.
- *
  * <p>
- * The output format is that of <code>git-whatchanged</code>, which looks something like this:
- *
+ * The output format is that of {@code git-whatchanged}, which looks something like this:
  * <pre>
  * commit dadaf808d99c4c23c53476b0c48e25a181016300
  * tree 1f5d7a5576bb74962aa6674a01ecf89f4a9da8af
@@ -41,83 +39,92 @@ import java.io.Writer;
  * :100644 100644 5826de835c1f40d3eef9d2e1ef8c27d0ec39c3c4 edb233af6e5512a0fa30fa5086d6ce034085664a M	src/main/java/org/jenkinsci/plugins/gitclient/Git.java
  * :100644 100644 5828ff74da8b6ad239d31ae258de2cf624f1a863 e7b224dedf864107cb7027fb3a5391470364d5cd M	src/main/java/org/jenkinsci/plugins/gitclient/GitClient.java
  * :100644 100644 acc6136f171fc8a2c0d21ccb3503d4ce522191db 440134ff44e3c692591c4a42ef6d3e3c7783f356 M	src/main/java/org/jenkinsci/plugins/gitclient/JGitAPIImpl.java
- *
  * </pre>
  *
  * @author Kohsuke Kawaguchi
  */
 public interface ChangelogCommand extends GitCommand {
+
     /**
      * Adds the revision to exclude from the log.
+     * <p>
      * Equivalent of {@code ^rev} on the command line.
-     *
+     * <p>
      * This method can be invoked multiple times.
      *
-     * @param rev a {@link java.lang.String} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
+     * @param rev a {@link String} object.
+     * @return a {@link ChangelogCommand} object.
      */
     ChangelogCommand excludes(String rev);
 
     /**
-     * excludes.
+     * Adds the revision to exclude from the log.
+     * <p>
+     * Equivalent of {@code ^rev} on the command line.
+     * <p>
+     * This method can be invoked multiple times.
      *
-     * @param rev a {@link org.eclipse.jgit.lib.ObjectId} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
+     * @param rev a {@link ObjectId} object.
+     * @return a {@link ChangelogCommand} object.
      */
     ChangelogCommand excludes(ObjectId rev);
 
     /**
      * Adds the revision to include in the log.
-     *
+     * <p>
      * This method can be invoked multiple times.
      *
-     * @param rev a {@link java.lang.String} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
+     * @param rev a {@link String} object.
+     * @return a {@link ChangelogCommand} object.
      */
     ChangelogCommand includes(String rev);
 
     /**
-     * includes.
+     * Adds the revision to include in the log.
+     * <p>
+     * This method can be invoked multiple times.
      *
-     * @param rev a {@link org.eclipse.jgit.lib.ObjectId} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
+     * @param rev a {@link ObjectId} object.
+     * @return a {@link ChangelogCommand} object.
      */
     ChangelogCommand includes(ObjectId rev);
 
     /**
      * Sets the {@link java.io.OutputStream} that receives the changelog.
-     *
-     * This takes {@link java.io.Writer} and not {@link java.io.OutputStream} because the changelog is a textual format,
+     * <p>
+     * This takes {@link Writer} and not {@link java.io.OutputStream} because the changelog is a textual format,
      * and therefore it is a stream of chars, not bytes. (If the latter, then we'd be unable to handle
      * multiple encodings correctly)
-     *
+     * <p>
      * According to man git-commit, the "encoding" header specifies the encoding of the commit message,
      * and git CLIs will try to translate encoding back to UTF-8. In any case, it is the implementation's
      * responsibility to correctly handle the encoding
      *
-     * @param w a {@link java.io.Writer} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
+     * @param w a {@link Writer} object.
+     * @return a {@link ChangelogCommand} object.
      */
     ChangelogCommand to(Writer w);
 
     /**
-     * Limit the number of changelog entries up to n.
+     * Limits the number of changelog entries.
      *
-     * @param n a int.
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
+     * @param n maximum number of changelog entries
+     * @return a {@link ChangelogCommand} object.
      */
     ChangelogCommand max(int n);
 
     /**
-     * Abort this ChangelogCommand without executing it, close any
-     * open resources.  The JGit implementation of changelog
+     * Aborts this {@link ChangelogCommand} without executing it, closes any
+     * open resources.
+     * <p>
+     * The JGit implementation of changelog
      * calculation opens the git repository and will close it when the
      * changelog.execute() is processed.  However, there are cases
      * (like GitSCM.computeChangeLog) which create a changelog and
      * never call execute().
-     *
+     * <p>
      * Either execute() or abort() must be called for each
-     * ChangelogCommand instance or files will be left open.
+     * {@link ChangelogCommand} instance or files will be left open.
      */
     void abort();
 }

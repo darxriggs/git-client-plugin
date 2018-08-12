@@ -1,43 +1,44 @@
 package hudson.plugins.git;
 
 /**
- * Records exception information related to git operations. This exception is
- * used to encapsulate command line git errors, JGit errors, and other errors
- * related to git operations.
+ * Records exception information related to git operations.
+ *
+ * This exception is used to encapsulate command line git errors,
+ * JGit errors, and other errors related to git operations.
  */
 public class GitException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Constructor for GitException.
+     * Constructs a git exception.
      */
     public GitException() {
         super();
     }
 
     /**
-     * Constructor for GitException.
+     * Constructs a git exception.
      *
-     * @param message {@link java.lang.String} description to associate with this exception
+     * @param message {@link String} description to associate with this exception
      */
     public GitException(String message) {
         super(message);
     }
 
     /**
-     * Constructor for GitException.
+     * Constructs a git exception.
      *
-     * @param cause {@link java.lang.Throwable} which caused this exception
+     * @param cause {@link Throwable} which caused this exception
      */
     public GitException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Constructor for GitException.
+     * Constructs a git exception.
      *
-     * @param message {@link java.lang.String} description to associate with this exception
-     * @param cause {@link java.lang.Throwable} which caused this exception
+     * @param message {@link String} description to associate with this exception
+     * @param cause {@link Throwable} which caused this exception
      */
     public GitException(String message, Throwable cause) {
         super(message, cause);

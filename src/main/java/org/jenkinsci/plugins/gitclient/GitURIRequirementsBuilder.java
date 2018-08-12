@@ -78,8 +78,9 @@ public class GitURIRequirementsBuilder {
     private static final long serialVersionUID = 1L;
 
     /**
-     * A pattern matching standard URI: </br>
-     * <code>scheme "://" user_password? hostname? portnumber? path</code>
+     * A pattern matching standard URI:
+     * <p>
+     * {@code scheme "://" user_password? hostname? portnumber? path}
      */
     private static final Pattern FULL_URI = Pattern.compile("^" // //$NON-NLS-1$
             + SCHEME_P //
@@ -289,7 +290,7 @@ public class GitURIRequirementsBuilder {
     }
 
     /**
-     * Replace any scheme requirements with the supplied scheme.
+     * Replaces any scheme requirements with the supplied scheme.
      *
      * @param scheme the scheme to use as a requirement
      * @return {@code this}.
@@ -304,7 +305,7 @@ public class GitURIRequirementsBuilder {
     }
 
     /**
-     * Replace any path requirements with the supplied path.
+     * Replaces any path requirements with the supplied path.
      *
      * @param path to use as a requirement
      * @return {@code this}.
@@ -319,7 +320,7 @@ public class GitURIRequirementsBuilder {
     }
 
     /**
-     * Replace any hostname requirements with the supplied hostname.
+     * Replaces any hostname requirements with the supplied hostname.
      *
      * @param hostname the hostname to use as a requirement
      * @return {@code this}.
@@ -330,7 +331,7 @@ public class GitURIRequirementsBuilder {
     }
 
     /**
-     * Replace any hostname or hostname:port requirements with the supplied hostname and port.
+     * Replaces any hostname or hostname:port requirements with the supplied hostname and port.
      *
      * @param hostname the hostname to use as a requirement or (@code null} to not add any requirement
      * @param port     the port or {@code -1} to not add {@link com.cloudbees.plugins.credentials.domains.HostnamePortRequirement}s

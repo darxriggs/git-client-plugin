@@ -19,10 +19,11 @@ import java.util.Set;
 
 /**
  * Backward compatible class to match the one some plugins used from git-plugin.
- * Extends CliGitAPIImpl to implement deprecated IGitAPI methods, but delegates supported methods to the selected git implementation (based on 
- * {@link org.jenkinsci.plugins.gitclient.Git#USE_CLI}).
+ * Extends {@link CliGitAPIImpl} to implement deprecated {@link IGitAPI} methods,
+ * but delegates supported methods to the selected git implementation
+ * (based on {@link Git#USE_CLI}).
  *
- * New implementations should use {@link org.jenkinsci.plugins.gitclient.GitClient}.
+ * New implementations should use {@link GitClient}.
  *
  * @author <a href="mailto:nicolas.deloof@gmail.com">Nicolas De Loof</a>
  * @deprecated
@@ -32,12 +33,12 @@ public class GitAPI extends CliGitAPIImpl {
     private final GitClient jgit;
 
     /**
-     * Constructor for GitAPI.
+     * Constructs a git API.
      *
      * @param gitExe name of git executable (git or git.exe or jgit)
-     * @param repository a {@link hudson.FilePath} for the repository directory
-     * @param listener a {@link hudson.model.TaskListener} which monitors the git work
-     * @param environment the {@link hudson.EnvVars} environment for the build
+     * @param repository a {@link FilePath} for the repository directory
+     * @param listener a {@link TaskListener} which monitors the git work
+     * @param environment the {@link EnvVars} environment for the build
      * @throws java.io.IOException if any IO failure
      * @throws java.lang.InterruptedException if interrupted
      */
@@ -47,12 +48,12 @@ public class GitAPI extends CliGitAPIImpl {
     }
 
     /**
-     * Constructor for GitAPI.
+     * Constructs a git API.
      *
      * @param gitExe name of git executable (git or git.exe or jgit)
-     * @param repository a {@link hudson.FilePath} for the repository directory
-     * @param listener a {@link hudson.model.TaskListener} which monitors the git work
-     * @param environment the {@link hudson.EnvVars} environment for the build
+     * @param repository a {@link FilePath} for the repository directory
+     * @param listener a {@link TaskListener} which monitors the git work
+     * @param environment the {@link EnvVars} environment for the build
      * @param reference SHA1 for checkout
      * @throws java.io.IOException if any IO failure
      * @throws java.lang.InterruptedException if interrupted.
@@ -63,12 +64,12 @@ public class GitAPI extends CliGitAPIImpl {
     }
 
     /**
-     * Constructor for GitAPI.
+     * Constructs a git API.
      *
      * @param gitExe name of git executable (git or git.exe or jgit)
-     * @param repository a {@link hudson.FilePath} for the repository directory
-     * @param listener a {@link hudson.model.TaskListener} which monitors the git work
-     * @param environment the {@link hudson.EnvVars} environment for the build
+     * @param repository a {@link FilePath} for the repository directory
+     * @param listener a {@link TaskListener} which monitors the git work
+     * @param environment the {@link EnvVars} environment for the build
      * @throws java.io.IOException if any IO failure
      * @throws java.lang.InterruptedException if interrupted.
      */

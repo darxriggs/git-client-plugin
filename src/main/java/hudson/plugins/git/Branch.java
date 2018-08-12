@@ -11,7 +11,7 @@ public class Branch extends GitObject {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Constructor for Branch.
+     * Constructs a branch.
      *
      * @param name branch name
      * @param sha1 object ID to which branch name points
@@ -21,7 +21,7 @@ public class Branch extends GitObject {
     }
 
     /**
-     * Constructor for Branch.
+     * Constructs a branch.
      *
      * @param candidate reference to which branch points (or should point)
      */

@@ -11,6 +11,7 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 
 import java.io.IOException;
+import java.io.ObjectStreamException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
@@ -89,10 +90,10 @@ abstract class AbstractGitAPIImpl implements GitClient, Serializable {
     /**
      * When sent to remote, switch to the proxy.
      *
-     * @return a {@link java.lang.Object} object.
-     * @throws java.io.ObjectStreamException if current channel is null
+     * @return a {@link Object} object.
+     * @throws ObjectStreamException if current channel is null
      */
-    protected Object writeReplace() throws java.io.ObjectStreamException {
+    protected Object writeReplace() throws ObjectStreamException {
         Channel currentChannel = Channel.current();
         if (currentChannel == null)
             throw new java.io.WriteAbortedException("No current channel", new java.lang.NullPointerException());
@@ -100,10 +101,10 @@ abstract class AbstractGitAPIImpl implements GitClient, Serializable {
     }
 
     /**
-     * remoteProxyFor.
+     * Returns a remote proxy for the given git client.
      *
-     * @param proxy a {@link org.jenkinsci.plugins.gitclient.GitClient} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.RemoteGitImpl} object.
+     * @param proxy a {@link GitClient} object.
+     * @return a {@link RemoteGitImpl} object.
      */
     protected RemoteGitImpl remoteProxyFor(GitClient proxy) {
         return new RemoteGitImpl(proxy);

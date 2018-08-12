@@ -4,7 +4,7 @@ import java.util.List;
 import org.eclipse.jgit.lib.ObjectId;
 
 /**
- * RevListCommand interface.
+ * Command to list revisions.
  *
  * @author <a href="mailto:m.zahnlecker@gmail.com">Marc Zahnlecker</a>
  */
@@ -19,53 +19,53 @@ public interface RevListCommand extends GitCommand {
     RevListCommand all();
 
     /**
-     * all.
+     * Sets to list all revisions.
      *
-     * @param all {@code true} to list all.
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
+     * @param all whether to list all revisions
+     * @return a {@link RevListCommand} object.
      * @since 2.5.0
      */
     RevListCommand all(boolean all);
 
     /**
-     * nowalk.
+     * Sets to only list the given revision or walk all.
      *
-     * @param nowalk {@code true} to skip revision walk.
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
+     * @param nowalk whether to skip revision walk
+     * @return a {@link RevListCommand} object.
      */
     RevListCommand nowalk(boolean nowalk);
 
     /**
-     * firstParent.
+     * Sets to only use the first parent on a merge commit.
      *
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
+     * @return a {@link RevListCommand} object.
      * @deprecated favour {@link #firstParent(boolean)}
      */
     @Deprecated
     RevListCommand firstParent();
 
     /**
-     * firstParent.
+     * Sets to only use the first parent on a merge commit.
      *
-     * @param firstParent {@code true} to list first parent
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
+     * @param firstParent whether to only use the first parent
+     * @return a {@link RevListCommand} object.
      * @since 2.5.0
      */
     RevListCommand firstParent(boolean firstParent);
 
     /**
-     * to.
+     * Sets the result list to add the found revisions to.
      *
-     * @param revs a {@link java.util.List} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
+     * @param revs a {@link List} object.
+     * @return a {@link RevListCommand} object.
      */
     RevListCommand to(List<ObjectId> revs);
 
     /**
-     * reference.
+     * Sets the refspec that defines the revisions to examine.
      *
-     * @param reference a {@link java.lang.String} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
+     * @param reference a {@link String} object.
+     * @return a {@link RevListCommand} object.
      */
     RevListCommand reference(String reference);
 }

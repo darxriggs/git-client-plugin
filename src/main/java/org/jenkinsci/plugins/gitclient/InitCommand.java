@@ -1,23 +1,23 @@
 package org.jenkinsci.plugins.gitclient;
 
 /**
- * InitCommand interface.
+ * Command to initialize a repository.
  */
 public interface InitCommand extends GitCommand {
 
     /**
-     * workspace.
+     * Sets the workspace directory.
      *
-     * @param workspace a {@link java.lang.String} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.InitCommand} object.
+     * @param workspace the workspace directory
+     * @return a {@link InitCommand} object.
      */
     InitCommand workspace(String workspace);
 
     /**
-     * bare.
+     * Use a bare repository without a workspace.
      *
-     * @param bare a boolean.
-     * @return a {@link org.jenkinsci.plugins.gitclient.InitCommand} object.
+     * @param bare whether the repository is bare
+     * @return a {@link InitCommand} object.
      */
     InitCommand bare(boolean bare);
 }

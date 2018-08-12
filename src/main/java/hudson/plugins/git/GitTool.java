@@ -28,26 +28,27 @@ import java.util.logging.Logger;
 import static hudson.init.InitMilestone.EXTENSIONS_AUGMENTED;
 
 /**
- * Information about Git installation. A GitTool is used to select
- * between different installations of git, as in "git" or "jgit".
+ * Represents a git installation.
+ *
+ * A git tool is used to select between different installations of git, as in "git" or "jgit".
  *
  * @author Jyrki Puttonen
  */
 public class GitTool extends ToolInstallation implements NodeSpecific<GitTool>, EnvironmentSpecific<GitTool> {
 
     /**
-     * Constructor for GitTool.
+     * Constructs a git tool.
      *
-     * @param name Tool name (for example, "git" or "jgit")
-     * @param home Tool location (usually "git")
-     * @param properties {@link java.util.List} of properties for this tool
+     * @param name tool name (for example, "git" or "jgit")
+     * @param home tool location (usually "git")
+     * @param properties list of properties for this tool
      */
     @DataBoundConstructor
     public GitTool(String name, String home, List<? extends ToolProperty<?>> properties) {
         super(name, home, properties);
     }
 
-    /** Constant <code>DEFAULT="Default"</code> */
+    /** Constant {@code DEFAULT="Default"} */
     public static transient final String DEFAULT = "Default";
 
     private static final long serialVersionUID = 1;
@@ -55,7 +56,7 @@ public class GitTool extends ToolInstallation implements NodeSpecific<GitTool>, 
     /**
      * getGitExe.
      *
-     * @return {@link java.lang.String} that will be used to execute git (e.g. "git" or "/usr/bin/git")
+     * @return {@link String} that will be used to execute git (e.g. "git" or "/usr/bin/git")
      */
     public String getGitExe() {
         return getHome();
@@ -74,7 +75,7 @@ public class GitTool extends ToolInstallation implements NodeSpecific<GitTool>, 
     /**
      * Returns the default installation.
      *
-     * @return default installation
+     * @return the default installation.
      */
     public static GitTool getDefaultInstallation() {
         Jenkins jenkinsInstance = Jenkins.getInstance();

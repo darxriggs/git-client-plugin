@@ -131,7 +131,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * GitClient pure Java implementation using JGit.
- * Goal is to eventually get a full java implementation for GitClient
+ * Goal is to eventually get a full java implementation for GitClient.
  * <b>
  * For internal use only, don't use directly. See {@link org.jenkinsci.plugins.gitclient.Git}
  * </b>
@@ -170,9 +170,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * clearCredentials.
-     */
+    /** {@inheritDoc} */
     @Override
     public void clearCredentials() {
         asSmartCredentialsProvider().clearCredentials();
@@ -228,12 +226,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         committer = new PersonIdent(name,email);
     }
 
-    /**
-     * init.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     @Override
     public void init() throws GitException, InterruptedException {
         init_().workspace(workspace.getAbsolutePath()).execute();
@@ -247,11 +240,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * checkout.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.CheckoutCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public CheckoutCommand checkout() {
         return new CheckoutCommand() {
@@ -485,23 +474,13 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * getBranches.
-     *
-     * @return a {@link java.util.Set} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @Override
     public Set<Branch> getBranches() throws GitException {
         return getBranchesInternal(ListBranchCommand.ListMode.ALL);
     }
 
-    /**
-     * getRemoteBranches.
-     *
-     * @return a {@link java.util.Set} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @Override
     public Set<Branch> getRemoteBranches() throws GitException {
         return getBranchesInternal(ListBranchCommand.ListMode.REMOTE);
@@ -541,11 +520,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * fetch_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public org.jenkinsci.plugins.gitclient.FetchCommand fetch_() {
         return new org.jenkinsci.plugins.gitclient.FetchCommand() {
@@ -633,14 +608,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param url a {@link org.eclipse.jgit.transport.URIish} object.
-     * @param refspecs a {@link java.util.List} object.
-     * @throws hudson.plugins.git.GitException if any.
-     * @throws java.lang.InterruptedException if any.
-     */
+    /** {@inheritDoc} */
     @Override
     public void fetch(URIish url, List<RefSpec> refspecs) throws GitException, InterruptedException {
         fetch_().from(url, refspecs).execute();
@@ -943,12 +911,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * getRepository.
-     *
-     * @return a {@link org.eclipse.jgit.lib.Repository} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @NonNull
     @Override
     public Repository getRepository() throws GitException {
@@ -959,11 +922,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * getWorkTree.
-     *
-     * @return a {@link hudson.FilePath} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public FilePath getWorkTree() {
         return new FilePath(workspace);
@@ -1062,11 +1021,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * changelog.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public ChangelogCommand changelog() {
         return new ChangelogCommand() {
@@ -1280,12 +1235,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * clean.
-     *
-     * @param cleanSubmodule flag to add extra -f
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @Override
     public void clean(boolean cleanSubmodule) throws GitException {
         try (Repository repo = getRepository()) {
@@ -1297,21 +1247,13 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * clean.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @Override
     public void clean() throws GitException {
         this.clean(false);
     }
 
-    /**
-     * clone_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.CloneCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public CloneCommand clone_() {
 
@@ -1490,11 +1432,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         };
     }
 
-    /**
-     * merge.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.MergeCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public MergeCommand merge() {
         return new MergeCommand() {
@@ -1586,11 +1524,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         };
     }
 
-    /**
-     * init_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.InitCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public InitCommand init_() {
         return new InitCommand() {
@@ -1739,12 +1673,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * hasGitRepo.
-     *
-     * @return true if this workspace has a git repository
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean hasGitRepo() throws GitException {
         try (Repository repo = getRepository()) {
@@ -1808,11 +1737,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         return branches;
     }
 
-    /**
-     * push.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public PushCommand push() {
         return new PushCommand() {
@@ -1932,11 +1857,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         };
     }
 
-    /**
-     * revList_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public RevListCommand revList_()
     {
@@ -2032,12 +1953,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         };
     }
 
-    /**
-     * revListAll.
-     *
-     * @return a {@link java.util.List} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @Override
     public List<ObjectId> revListAll() throws GitException {
         List<ObjectId> oidList = new ArrayList<>();
@@ -2149,11 +2065,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * Update submodules.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand} object.
-     */
+    /** {@inheritDoc} */
     @Override
     public org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand submoduleUpdate() {
         return new org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand() {
@@ -2444,12 +2356,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * submoduleInit.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     @Deprecated
     @Override
     public void submoduleInit() throws GitException, InterruptedException {
@@ -2460,12 +2367,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
         }
     }
 
-    /**
-     * submoduleSync.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     @Deprecated
     @Override
     public void submoduleSync() throws GitException, InterruptedException {
@@ -2562,9 +2464,7 @@ public class JGitAPIImpl extends LegacyCompatibleGitAPIImpl {
 
             final RevFlagSet allFlags = new RevFlagSet(); // combined flags of all the Candidate instances
 
-            /**
-             * Tracks the depth of each tag as we find them.
-             */
+            /* Tracks the depth of each tag as we find them. */
             class Candidate {
                 final RevCommit commit;
                 final Ref tag;

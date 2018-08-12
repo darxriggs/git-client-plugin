@@ -3,59 +3,59 @@ package org.jenkinsci.plugins.gitclient;
 import org.eclipse.jgit.transport.URIish;
 
 /**
- * PushCommand interface.
+ * Command to push to a repository.
  *
  * @author <a href="mailto:nicolas.deloof@gmail.com">Nicolas De Loof</a>
  */
 public interface PushCommand extends GitCommand {
 
     /**
-     * to.
+     * URL of the repository to be pushed to.
      *
-     * @param remote a {@link org.eclipse.jgit.transport.URIish} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
+     * @param remote a {@link URIish} object.
+     * @return a {@link PushCommand} object.
      */
     PushCommand to(URIish remote);
 
     /**
-     * ref.
+     * Refspec that specifies the references to be pushed.
      *
-     * @param refspec a {@link java.lang.String} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
+     * @param refspec a {@link String} object.
+     * @return a {@link PushCommand} object.
      */
     PushCommand ref(String refspec);
 
     /**
-     * force.
+     * Sets force mode.
      *
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
+     * @return a {@link PushCommand} object.
      * @deprecated favour {@link #force(boolean)}
      */
     @Deprecated
     PushCommand force();
 
     /**
-     * force.
+     * Sets force mode.
      *
-     * @param force {@code true} if the push should be forced
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
+     * @param force whether the push should be forced
+     * @return a {@link PushCommand} object.
      * @since 2.5.0
      */
     PushCommand force(boolean force);
 
     /**
-     * tags.
+     * Request that tags and their references are not pushed.
      *
-     * @param tags if true, tags will be included in the push, otherwise they are not pushed
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
+     * @param tags whether tags are pushed or not
+     * @return a {@link PushCommand} object.
      */
     PushCommand tags(boolean tags);
 
     /**
-     * timeout.
+     * Sets a timeout to be used.
      *
-     * @param timeout a {@link java.lang.Integer} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
+     * @param timeout timeout in minutes
+     * @return a {@link PushCommand} object.
      */
     PushCommand timeout(Integer timeout);
 }

@@ -25,9 +25,9 @@ public class Revision implements java.io.Serializable, Cloneable {
     Collection<Branch> branches;
 
     /**
-     * Constructor for Revision.
+     * Constructs a revision.
      *
-     * @param sha1 a {@link org.eclipse.jgit.lib.ObjectId} object.
+     * @param sha1 a {@link ObjectId} object.
      */
     public Revision(ObjectId sha1) {
         this.sha1 = sha1;
@@ -35,10 +35,10 @@ public class Revision implements java.io.Serializable, Cloneable {
     }
 
     /**
-     * Constructor for Revision.
+     * Constructs a revision.
      *
-     * @param sha1 a {@link org.eclipse.jgit.lib.ObjectId} object.
-     * @param branches a {@link java.util.Collection} object.
+     * @param sha1 a {@link ObjectId} object.
+     * @param branches a {@link Collection} object.
      */
     public Revision(ObjectId sha1, Collection<Branch> branches) {
         this.sha1 = sha1;
@@ -48,7 +48,7 @@ public class Revision implements java.io.Serializable, Cloneable {
     /**
      * Getter for the field <code>sha1</code>.
      *
-     * @return a {@link org.eclipse.jgit.lib.ObjectId} object.
+     * @return a {@link ObjectId} object.
      */
     public ObjectId getSha1() {
         return sha1;
@@ -57,7 +57,7 @@ public class Revision implements java.io.Serializable, Cloneable {
     /**
      * getSha1String.
      *
-     * @return a {@link java.lang.String} object.
+     * @return a {@link String} object.
      */
     @Exported(name = "SHA1")
     public String getSha1String() {
@@ -67,7 +67,7 @@ public class Revision implements java.io.Serializable, Cloneable {
     /**
      * Setter for the field <code>sha1</code>.
      *
-     * @param sha1 a {@link org.eclipse.jgit.lib.ObjectId} object.
+     * @param sha1 a {@link ObjectId} object.
      */
     public void setSha1(ObjectId sha1) {
         this.sha1 = sha1;
@@ -76,7 +76,7 @@ public class Revision implements java.io.Serializable, Cloneable {
     /**
      * Getter for the field <code>branches</code>.
      *
-     * @return a {@link java.util.Collection} object.
+     * @return a {@link Collection} object.
      */
     @Exported(name = "branch")
     public Collection<Branch> getBranches() {
@@ -86,7 +86,7 @@ public class Revision implements java.io.Serializable, Cloneable {
     /**
      * Setter for the field <code>branches</code>.
      *
-     * @param branches a {@link java.util.Collection} object.
+     * @param branches a {@link Collection} object.
      */
     public void setBranches(Collection<Branch> branches) {
         this.branches = branches;
@@ -96,7 +96,7 @@ public class Revision implements java.io.Serializable, Cloneable {
      * Returns whether the revision contains the specified branch.
      *
      * @param name the name of the branch
-     * @return whether the revision contains the branch
+     * @return whether the revision contains the branch.
      */
     public boolean containsBranchName(String name) {
         return branches.stream().anyMatch(branch -> branch.getName().equals(name));

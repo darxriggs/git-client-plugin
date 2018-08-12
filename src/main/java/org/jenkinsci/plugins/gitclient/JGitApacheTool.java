@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * JGit, configured with the Apache HTTP Client, as {@link hudson.plugins.git.GitTool}
+ * JGit, configured with the Apache HTTP Client, as {@link GitTool}
  */
 public class JGitApacheTool extends GitTool {
     private static final long serialVersionUID = 1L;

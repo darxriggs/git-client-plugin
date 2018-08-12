@@ -179,20 +179,13 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         return new RemoteOutputStream(os);
     }
 
-    /**
-     * getRepository.
-     *
-     * @return a {@link org.eclipse.jgit.lib.Repository} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     @NonNull
     public Repository getRepository() throws GitException {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * clearCredentials.
-     */
+    /** {@inheritDoc} */
     public void clearCredentials() {
         proxy.clearCredentials();
     }
@@ -237,21 +230,12 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         return proxy.withRepository(callable);
     }
 
-    /**
-     * getWorkTree.
-     *
-     * @return a {@link hudson.FilePath} object.
-     */
+    /** {@inheritDoc} */
     public FilePath getWorkTree() {
         return proxy.getWorkTree();
     }
 
-    /**
-     * init.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public void init() throws GitException, InterruptedException {
         proxy.init();
     }
@@ -271,13 +255,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.commit(message, author, committer);
     }
 
-    /**
-     * hasGitRepo.
-     *
-     * @return true if this workspace has a git repository
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public boolean hasGitRepo() throws GitException, InterruptedException {
         return proxy.hasGitRepo();
     }
@@ -312,11 +290,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.checkout(ref, branch);
     }
 
-    /**
-     * checkout.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.CheckoutCommand} object.
-     */
+    /** {@inheritDoc} */
     public CheckoutCommand checkout() {
         return command(CheckoutCommand.class);
     }
@@ -346,68 +320,37 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.clone(url, origin, useShallowClone, reference);
     }
 
-    /**
-     * clone_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.CloneCommand} object.
-     */
+    /** {@inheritDoc} */
     public CloneCommand clone_() {
         return command(CloneCommand.class);
     }
 
-    /**
-     * merge.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.MergeCommand} object.
-     */
+    /** {@inheritDoc} */
     public MergeCommand merge() {
         return command(MergeCommand.class);
     }
 
-    /**
-     * rebase.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.RebaseCommand} object.
-     */
+    /** {@inheritDoc} */
     public RebaseCommand rebase() {
        return command(RebaseCommand.class);
     }
 
-    /**
-     * init_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.InitCommand} object.
-     */
+    /** {@inheritDoc} */
     public InitCommand init_() {
         return command(InitCommand.class);
     }
 
-    /**
-     * fetch_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.FetchCommand} object.
-     */
+    /** {@inheritDoc} */
     public FetchCommand fetch_() {
         return command(FetchCommand.class);
     }
 
-    /**
-     * push.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.PushCommand} object.
-     */
+    /** {@inheritDoc} */
     public PushCommand push() {
         return command(PushCommand.class);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param url a {@link org.eclipse.jgit.transport.URIish} object.
-     * @param refspecs a {@link java.util.List} object.
-     * @throws hudson.plugins.git.GitException if any.
-     * @throws java.lang.InterruptedException if any.
-     */
+    /** {@inheritDoc} */
     public void fetch(URIish url, List<RefSpec> refspecs) throws GitException, InterruptedException {
         proxy.fetch(url, refspecs);
     }
@@ -442,23 +385,12 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.prune(repository);
     }
 
-    /**
-     * clean.
-     *
-     * @param cleanSubmodule flag to add extra -f
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public void clean(boolean cleanSubmodule) throws GitException, InterruptedException {
         proxy.clean(cleanSubmodule);
     }
 
-    /**
-     * clean.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public void clean() throws GitException, InterruptedException {
         proxy.clean();
     }
@@ -473,24 +405,12 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.deleteBranch(name);
     }
 
-    /**
-     * getBranches.
-     *
-     * @return a {@link java.util.Set} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public Set<Branch> getBranches() throws GitException, InterruptedException {
         return proxy.getBranches();
     }
 
-    /**
-     * getRemoteBranches.
-     *
-     * @return a {@link java.util.Set} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public Set<Branch> getRemoteBranches() throws GitException, InterruptedException {
         return proxy.getRemoteBranches();
     }
@@ -571,22 +491,12 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         return proxy.revParse(revName);
     }
 
-    /**
-     * revList_.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.RevListCommand} object.
-     */
+    /** {@inheritDoc} */
     public RevListCommand revList_() {
         return proxy.revList_();
     }
 
-    /**
-     * revListAll.
-     *
-     * @return a {@link java.util.List} object.
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public List<ObjectId> revListAll() throws GitException, InterruptedException {
         return proxy.revListAll();
     }
@@ -601,13 +511,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         return proxy.subGit(subdir);
     }
 
-    /**
-     * hasGitModules.
-     *
-     * @return true if this repository has submodules
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public boolean hasGitModules() throws GitException, InterruptedException {
         return proxy.hasGitModules();
     }
@@ -627,14 +531,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.submoduleUpdate(recursive);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param recursive a boolean.
-     * @param ref a {@link java.lang.String} object.
-     * @throws hudson.plugins.git.GitException if any.
-     * @throws java.lang.InterruptedException if any.
-     */
+    /** {@inheritDoc} */
     public void submoduleUpdate(boolean recursive, String ref) throws GitException, InterruptedException {
         proxy.submoduleUpdate(recursive, ref);
     }
@@ -649,11 +546,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.submoduleUpdate(recursive, remoteTracking, reference);
     }
 
-    /**
-     * submoduleUpdate.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.SubmoduleUpdateCommand} object.
-     */
+    /** {@inheritDoc} */
     public SubmoduleUpdateCommand submoduleUpdate() {
         return command(SubmoduleUpdateCommand.class);
     }
@@ -673,24 +566,12 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         proxy.changelog(revFrom, revTo, wrap(os));
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param revFrom a {@link java.lang.String} object.
-     * @param revTo a {@link java.lang.String} object.
-     * @param os a {@link java.io.Writer} object.
-     * @throws hudson.plugins.git.GitException if any.
-     * @throws java.lang.InterruptedException if any.
-     */
+    /** {@inheritDoc} */
     public void changelog(String revFrom, String revTo, Writer os) throws GitException, InterruptedException {
         proxy.changelog(revFrom, revTo, os); // TODO: wrap
     }
 
-    /**
-     * changelog.
-     *
-     * @return a {@link org.jenkinsci.plugins.gitclient.ChangelogCommand} object.
-     */
+    /** {@inheritDoc} */
     public ChangelogCommand changelog() {
         return command(ChangelogCommand.class);
     }
@@ -740,13 +621,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         return getGitAPI().getDefaultRemote(_default_);
     }
 
-    /**
-     * isBareRepository.
-     *
-     * @return true if this repository is bare
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public boolean isBareRepository() throws GitException, InterruptedException {
         return getGitAPI().isBareRepository();
     }
@@ -756,22 +631,12 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         return getGitAPI().isBareRepository(GIT_DIR);
     }
 
-    /**
-     * submoduleInit.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public void submoduleInit() throws GitException, InterruptedException {
         getGitAPI().submoduleInit();
     }
 
-    /**
-     * submoduleSync.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public void submoduleSync() throws GitException, InterruptedException {
         getGitAPI().submoduleSync();
     }
@@ -806,12 +671,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         getGitAPI().fetch(remoteRepository);
     }
 
-    /**
-     * fetch.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public void fetch() throws GitException, InterruptedException {
         getGitAPI().fetch();
     }
@@ -821,12 +681,7 @@ class RemoteGitImpl implements GitClient, IGitAPI, Serializable {
         getGitAPI().reset(hard);
     }
 
-    /**
-     * reset.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public void reset() throws GitException, InterruptedException {
         getGitAPI().reset();
     }

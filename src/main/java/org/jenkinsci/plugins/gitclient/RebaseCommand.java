@@ -1,15 +1,15 @@
 package org.jenkinsci.plugins.gitclient;
 
 /**
- * RebaseCommand interface.
+ * Command to rebase commits.
  */
 public interface RebaseCommand extends GitCommand {
 
     /**
-     * setUpstream.
+     * Sets the upstream to rebase onto.
      *
-     * @param upstream a {@link java.lang.String} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.RebaseCommand} object.
+     * @param upstream a {@link String} object.
+     * @return a {@link RebaseCommand} object.
      */
     RebaseCommand setUpstream(String upstream);
 }

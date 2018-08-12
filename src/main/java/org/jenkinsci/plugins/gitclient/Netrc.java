@@ -32,9 +32,9 @@ class Netrc {
 
 
     /**
-     * getInstance.
+     * Gets the {@link Netrc} instance.
      *
-     * @return a {@link org.jenkinsci.plugins.gitclient.Netrc} object.
+     * @return a {@link Netrc} object.
      */
     public static Netrc getInstance() {
         File netrc = getDefaultFile();
@@ -42,10 +42,10 @@ class Netrc {
     }
 
     /**
-     * getInstance.
+     * Gets the {@link Netrc} instance.
      *
-     * @param netrcPath a {@link java.lang.String} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.Netrc} object.
+     * @param netrcPath a {@link String} object.
+     * @return a {@link Netrc} object.
      */
     public static Netrc getInstance(@NonNull String netrcPath) {
         File netrc = new File(netrcPath);
@@ -53,10 +53,10 @@ class Netrc {
     }
 
     /**
-     * getInstance.
+     * Gets the {@link Netrc} instance.
      *
-     * @param netrc a {@link java.io.File} object.
-     * @return a {@link org.jenkinsci.plugins.gitclient.Netrc} object.
+     * @param netrc a {@link File} object.
+     * @return a {@link Netrc} object.
      */
     public static Netrc getInstance(File netrc) {
         return new Netrc(netrc).parse();
@@ -71,10 +71,10 @@ class Netrc {
 
 
     /**
-     * getCredentials.
+     * Gets credentials for the specified host.
      *
-     * @param host a {@link java.lang.String} object.
-     * @return a {@link org.apache.http.auth.Credentials} object.
+     * @param host a {@link String} object.
+     * @return a {@link Credentials} object.
      */
     public synchronized Credentials getCredentials(String host) {
         if (!this.netrc.exists()) return null;

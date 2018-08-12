@@ -17,14 +17,14 @@ import java.lang.reflect.Constructor;
 
 /**
  * Git repository access class. Provides local and remote access to a git
- * repository through a {@link org.jenkinsci.plugins.gitclient.GitClient} implementation. Current git
+ * repository through a {@link GitClient} implementation. Current git
  * implementations include either command line git ("git" -
- * {@link org.jenkinsci.plugins.gitclient.CliGitAPIImpl}) or JGit ("jgit" - {@link org.jenkinsci.plugins.gitclient.JGitAPIImpl}).
- *
+ * {@link CliGitAPIImpl}) or JGit ("jgit" - {@link JGitAPIImpl}).
+ * <p>
  * The command line git implementation requires a separately installed git
  * program. The command line git implementation is the current reference
  * implementation.
- *
+ * <p>
  * The JGit implementation is bundled entirely within the git client plugin and
  * does not require any external programs. The JGit implementation is not yet
  * functionally complete, though it handles most use cases.
@@ -39,13 +39,13 @@ public class Git implements Serializable {
     private String exe;
 
     /**
-     * Constructor for a Git object. Either <code>Git.with(listener, env)</code>
-     * or <code>new Git(listener, env)</code> can be used to construct a Git
+     * Constructor for a Git object. Either {@code Git.with(listener, env)}
+     * or {@code new Git(listener, env)} can be used to construct a Git
      * object.
      *
-     * @param listener a {@link hudson.model.TaskListener} which can be used to
+     * @param listener a {@link TaskListener} which can be used to
      * monitor git implementation operations
-     * @param env a {@link hudson.EnvVars} which provides environment values to
+     * @param env a {@link EnvVars} which provides environment values to
      * the git implementation
      */
     public Git(TaskListener listener, EnvVars env) {
@@ -55,12 +55,12 @@ public class Git implements Serializable {
 
     /**
      * Fluent constructor for a Git object. Either
-     * <code>Git.with(listener, env)</code> or new
-     * <code>Git(listener, env)</code> can be used to construct a Git object.
+     * {@code Git.with(listener, env)} or new
+     * {@code Git(listener, env)} can be used to construct a Git object.
      *
-     * @param listener a {@link hudson.model.TaskListener} which can be used to
+     * @param listener a {@link TaskListener} which can be used to
      * monitor git implementation operations
-     * @param env a {@link hudson.EnvVars} which provides environment values to
+     * @param env a {@link EnvVars} which provides environment values to
      * the git implementation
      * @return a {@link org.jenkinsci.plugins.gitclient.Git} object for repository access
      */
@@ -71,8 +71,8 @@ public class Git implements Serializable {
     /**
      * Defines the local directory containing the git repository which will be
      * used. For repositories with a working directory, repository is the parent
-     * of the <code>.git</code> directory. For bare repositories, repository is
-     * the parent of the <code>objects</code> directory.
+     * of the {@code .git} directory. For bare repositories, repository is
+     * the parent of the {@code objects} directory.
      *
      * @param repository {@link java.io.File} of the git repository
      * @return a {@link org.jenkinsci.plugins.gitclient.Git} object for repository access
@@ -84,9 +84,9 @@ public class Git implements Serializable {
     /**
      * Defines the {@link hudson.FilePath} (remotable directory) containing the
      * git repository which will be used. For repositories with a working
-     * directory, repository is the parent of the <code>.git</code> directory.
+     * directory, repository is the parent of the {@code .git} directory.
      * For bare repositories, repository is the parent of the
-     * <code>objects</code> directory.
+     * {@code objects} directory.
      *
      * @param repository {@link hudson.FilePath} of the git repository.
      * @return a {@link org.jenkinsci.plugins.gitclient.Git} object for repository access
@@ -97,7 +97,7 @@ public class Git implements Serializable {
     }
 
     /**
-     * Set the (node/environment specific) git executable to be used. If not
+     * Sets the (node/environment specific) git executable to be used. If not
      * set, JGit implementation will be used. When default is used, it assumes
      * the caller does not rely on unimplemented CLI methods.
      *
@@ -110,10 +110,10 @@ public class Git implements Serializable {
     }
 
     /**
-     * {@link org.jenkinsci.plugins.gitclient.GitClient} implementation. The {@link org.jenkinsci.plugins.gitclient.GitClient} interface
+     * {@link GitClient} implementation. The {@link GitClient} interface
      * provides the key operations which can be performed on a git repository.
      *
-     * @return a {@link org.jenkinsci.plugins.gitclient.GitClient} for git operations on the repository
+     * @return a {@link GitClient} for git operations on the repository
      * @throws java.io.IOException if any IO failure
      * @throws java.lang.InterruptedException if interrupted.
      */
@@ -139,7 +139,7 @@ public class Git implements Serializable {
     /**
      * Constant which controls the default implementation to be used.
      *
-     * <code>USE_CLI=Boolean.valueOf(System.getProperty(Git.class.getName() + ".useCLI", "true"))</code>.
+     * {@code USE_CLI=Boolean.valueOf(System.getProperty(Git.class.getName() + ".useCLI", "true"))}.
      *
      * Uses command line implementation ({@link CliGitAPIImpl}) by default.
      */

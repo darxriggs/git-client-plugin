@@ -28,7 +28,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Partial implementation of {@link IGitAPI} by delegating to {@link GitClient} APIs.
- *
  * <p>
  * {@link IGitAPI} is still used by many others, such as git-plugin, so we want to support them in
  * both JGit and CGit, and often they can be implemented in terms of other methods, hence it's here.
@@ -37,13 +36,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 abstract class LegacyCompatibleGitAPIImpl extends AbstractGitAPIImpl implements IGitAPI {
 
-    /**
-     * isBareRepository.
-     *
-     * @return true if this repository is a bare repository
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     public boolean isBareRepository() throws GitException, InterruptedException {
         return isBareRepository("");
     }
@@ -54,7 +47,7 @@ abstract class LegacyCompatibleGitAPIImpl extends AbstractGitAPIImpl implements 
     /**
      * Constructor for LegacyCompatibleGitAPIImpl.
      *
-     * @param workspace a {@link java.io.File} object.
+     * @param workspace a {@link File} object.
      */
     protected LegacyCompatibleGitAPIImpl(File workspace) {
         this.workspace = workspace;
@@ -100,23 +93,13 @@ abstract class LegacyCompatibleGitAPIImpl extends AbstractGitAPIImpl implements 
         fetch(remoteRepository.getURIs().get(0), remoteRepository.getFetchRefSpecs());
     }
 
-    /**
-     * fetch.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     @Deprecated
     public void fetch() throws GitException, InterruptedException {
         fetch(null, (RefSpec) null);
     }
 
-    /**
-     * reset.
-     *
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     * @throws java.lang.InterruptedException if interrupted.
-     */
+    /** {@inheritDoc} */
     @Deprecated
     public void reset() throws GitException, InterruptedException {
         reset(false);
@@ -204,12 +187,7 @@ abstract class LegacyCompatibleGitAPIImpl extends AbstractGitAPIImpl implements 
         return remoteProxyFor(currentChannel.export(IGitAPI.class, this));
     }
 
-    /**
-     * hasGitModules.
-     *
-     * @return true if this repositor has one or more submodules
-     * @throws hudson.plugins.git.GitException if underlying git operation fails.
-     */
+    /** {@inheritDoc} */
     public boolean hasGitModules() throws GitException {
         try {
 
@@ -233,30 +211,29 @@ abstract class LegacyCompatibleGitAPIImpl extends AbstractGitAPIImpl implements 
     
     /**
      * This method takes a branch specification and normalizes it get unambiguous results.
-     * This is the case when using "refs/heads/"<br>
-     * <br>
+     * This is the case when using "refs/heads/"
+     * <p>
      * TODO: Currently only for specs starting with "refs/heads/" the implementation is correct.
      * All others branch specs should also be normalized to "refs/heads/" in order to get unambiguous results.
      * To achieve this it is necessary to identify remote names in the branch spec and to discuss how
      * to handle clashes (e.g. "remoteName/master" for branch "master" (refs/heads/master) in remote "remoteName" and branch "remoteName/master" (refs/heads/remoteName/master)).
-     * <br><br>
+     * <p>
      * Existing behavior is intentionally being retained so that
      * current use cases are not disrupted by a behavioral change.
-     * <br><br>
+     * <p>
      * E.g.
      * <table>
      * <caption>Branch Spec Normalization Examples</caption>
      * <tr><th>branch spec</th><th>normalized</th></tr>
-     * <tr><td><code>master</code></td><td><code>master*</code></td></tr>
-     * <tr><td><code>feature1</code></td><td><code>feature1*</code></td></tr>
-     * <tr><td><code>feature1/master</code></td><td><div style="color:red">master <code>feature1/master</code>*</div></td></tr>
-     * <tr><td><code>origin/master</code></td><td><code>master*</code></td></tr>
-     * <tr><td><code>repo2/feature1</code></td><td><code>feature1*</code></td></tr>
-     * <tr><td><code>refs/heads/feature1</code></td><td><code>refs/heads/feature1</code></td></tr>
-     * <tr><td valign="top">origin/namespaceA/fix15</td>
-     *     <td><div style="color:red">fix15 <code>namespaceA/fix15</code>*</div></td><td></td></tr>
-     * <tr><td><code>refs/heads/namespaceA/fix15</code></td><td><code>refs/heads/namespaceA/fix15</code></td></tr>
-     * <tr><td><code>remotes/origin/namespaceA/fix15</code></td><td><code>refs/heads/namespaceA/fix15</code></td></tr>
+     * <tr><td>{@code master}</td><td>{@code master*}</td></tr>
+     * <tr><td>{@code feature1}</td><td>{@code feature1*}</td></tr>
+     * <tr><td>{@code feature1/master}</td><td><div style="color:red">master {@code feature1/master}*</div></td></tr>
+     * <tr><td>{@code origin/master}</td><td>{@code master*}</td></tr>
+     * <tr><td>{@code repo2/feature1}</td><td>{@code feature1*}</td></tr>
+     * <tr><td>{@code refs/heads/feature1}</td><td>{@code refs/heads/feature1}</td></tr>
+     * <tr><td valign="top">origin/namespaceA/fix15</td><td><div style="color:red">fix15 {@code namespaceA/fix15}*</div></td><td></td></tr>
+     * <tr><td>{@code refs/heads/namespaceA/fix15}</td><td>{@code refs/heads/namespaceA/fix15}</td></tr>
+     * <tr><td>{@code remotes/origin/namespaceA/fix15}</td><td>{@code refs/heads/namespaceA/fix15}</td></tr>
      * </table><br>
      * *) TODO: Normalize to "refs/heads/"
      *
